@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { 
   Sparkles, ArrowRight, ShieldCheck, Play, Award, 
-  Target, Cpu, Users, Zap, CheckCircle2 
+  Target, Cpu, Users, Zap, CheckCircle2, Trophy 
 } from 'lucide-react';
 
 export default function Hero({ onOpenConsultation }) {
