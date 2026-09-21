@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Users, Award, Star, BookOpen, Quote, 
+  Users, Award, Star, BookOpen, Quote, Trophy,
   ArrowRight, Sparkles, CheckCircle, GraduationCap, Calendar 
 } from 'lucide-react';
 import { facultyData } from '../../data/mockData';
