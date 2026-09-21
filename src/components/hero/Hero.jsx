@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { 
   Sparkles, ArrowRight, ShieldCheck, Play, Award, 
-  Target, Cpu, Users, Zap, CheckCircle2, Trophy 
+  Target, Cpu, Users, Zap, CheckCircle2, Trophy, Star, ChevronRight
 } from 'lucide-react';
 
 export default function Hero({ onOpenConsultation }) {
@@ -10,27 +10,32 @@ export default function Hero({ onOpenConsultation }) {
     <section className="relative min-h-screen pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden flex flex-col justify-center bg-slate-950 bg-grid-pattern">
       
       {/* Dynamic Ambient Background Glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[800px] h-[450px] bg-gradient-to-tr from-cyan-600/20 via-indigo-600/20 to-purple-600/20 blur-[130px] rounded-full pointer-events-none animate-pulse-glow" />
-      <div className="absolute top-1/3 left-10 w-72 h-72 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-500/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[900px] h-[500px] bg-gradient-to-tr from-cyan-600/25 via-indigo-600/20 to-purple-600/25 blur-[140px] rounded-full pointer-events-none animate-pulse-glow" />
+      <div className="absolute top-1/3 left-5 w-80 h-80 bg-cyan-500/15 blur-[110px] rounded-full pointer-events-none animate-float" />
+      <div className="absolute bottom-10 right-5 w-96 h-96 bg-purple-500/15 blur-[130px] rounded-full pointer-events-none" />
+
+      {/* Subtle Rotating Light Rings */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] border border-cyan-500/10 rounded-full animate-spin-slow pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] border border-indigo-500/10 rounded-full animate-spin-slow pointer-events-none" style={{ animationDirection: 'reverse', animationDuration: '35s' }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="text-center max-w-4xl mx-auto">
           
-          {/* Top Announcement Badge */}
+          {/* Top Announcement Badge with Shimmer */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 border border-cyan-500/30 backdrop-blur-md shadow-lg shadow-cyan-950/40 mb-6"
+            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-slate-900/90 border border-cyan-500/40 backdrop-blur-xl shadow-lg shadow-cyan-950/50 mb-8 cursor-pointer hover:border-cyan-400 transition-all group"
+            onClick={onOpenConsultation}
           >
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping" />
+            <Sparkles className="w-4 h-4 text-cyan-400 group-hover:rotate-12 transition-transform" />
             <span className="text-xs sm:text-sm font-semibold text-slate-200">
-              Admissions Open for 2026-27 | <span className="text-cyan-400 font-bold">NSAT 100% Scholarship Test</span>
+              Admissions Open 2026-27 | <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-300 font-bold">NSAT 100% Scholarship Test</span>
             </span>
-            <ArrowRight className="w-3.5 h-3.5 text-cyan-400" />
+            <ChevronRight className="w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform" />
           </motion.div>
 
           {/* Main Headline */}
@@ -41,7 +46,7 @@ export default function Hero({ onOpenConsultation }) {
             className="font-heading text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-6"
           >
             Pioneering The Next Era Of <br className="hidden sm:inline" />
-            <span className="text-gradient-cyan">Competitive Excellence</span>
+            <span className="text-gradient-cyan drop-shadow-sm">Competitive Excellence</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -51,7 +56,7 @@ export default function Hero({ onOpenConsultation }) {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-base sm:text-xl text-slate-300 font-normal leading-relaxed max-w-3xl mx-auto mb-10"
           >
-            Empowering serious aspirants for <span className="text-white font-semibold">IIT-JEE, NEET-UG & Olympiads</span> with Senior IITian faculty, 3D interactive learning engines, and personalized AI rank diagnostics.
+            Empowering serious aspirants for <span className="text-white font-semibold underline decoration-cyan-500/50 underline-offset-4">IIT-JEE, NEET-UG & Olympiads</span> with Senior IITian faculty, 3D interactive learning engines, and personalized AI rank diagnostics.
           </motion.p>
 
           {/* Call to Actions */}
@@ -59,62 +64,62 @@ export default function Hero({ onOpenConsultation }) {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14"
           >
             <button
               onClick={onOpenConsultation}
-              className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-sm text-slate-950 bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-300 hover:from-cyan-300 hover:to-indigo-200 shadow-xl shadow-cyan-500/25 hover:shadow-cyan-400/40 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-sm text-slate-950 bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-300 hover:from-cyan-300 hover:to-indigo-200 shadow-xl shadow-cyan-500/25 hover:shadow-cyan-400/40 hover:scale-[1.03] transition-all duration-300 flex items-center justify-center gap-2 group cursor-pointer"
             >
               <span>Explore Courses & Batches</span>
-              <ArrowRight className="w-4 h-4 text-slate-950" />
+              <ArrowRight className="w-4 h-4 text-slate-950 group-hover:translate-x-1 transition-transform" />
             </button>
 
             <a
               href="#scholarship"
-              className="w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-sm text-slate-200 bg-slate-900/80 border border-slate-700/80 hover:border-cyan-500/50 hover:bg-slate-800/80 backdrop-blur-md transition-all duration-300 flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-sm text-slate-200 bg-slate-900/90 border border-slate-700/80 hover:border-cyan-500/60 hover:bg-slate-800/90 backdrop-blur-md shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group"
             >
-              <Award className="w-4 h-4 text-cyan-400" />
+              <Award className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
               <span>Register for NSAT Scholarship</span>
             </a>
           </motion.div>
 
-          {/* Quick Value Proof Metrics */}
+          {/* Quick Value Proof Metrics Cards */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-6 border-t border-slate-800/80"
           >
-            <div className="glass-panel p-4 rounded-2xl text-left border-l-2 border-l-cyan-500">
+            <div className="glass-card-glow p-5 rounded-2xl text-left border-l-4 border-l-cyan-500 group">
               <div className="flex items-center gap-2 text-cyan-400 mb-1">
-                <Trophy className="w-4 h-4" />
-                <span className="font-heading font-extrabold text-2xl sm:text-3xl text-white">340+</span>
+                <Trophy className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-heading font-extrabold text-2xl sm:text-3xl text-white group-hover:text-cyan-300 transition-colors">340+</span>
               </div>
-              <p className="text-xs text-slate-400 font-medium">Top 100 AIR in JEE & NEET</p>
+              <p className="text-xs text-slate-300 font-medium">Top 100 AIR in JEE & NEET</p>
             </div>
 
-            <div className="glass-panel p-4 rounded-2xl text-left border-l-2 border-l-indigo-500">
+            <div className="glass-card-glow p-5 rounded-2xl text-left border-l-4 border-l-indigo-500 group">
               <div className="flex items-center gap-2 text-indigo-400 mb-1">
-                <Users className="w-4 h-4" />
-                <span className="font-heading font-extrabold text-2xl sm:text-3xl text-white">18,500+</span>
+                <Users className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-heading font-extrabold text-2xl sm:text-3xl text-white group-hover:text-indigo-300 transition-colors">18,500+</span>
               </div>
-              <p className="text-xs text-slate-400 font-medium">Selections in IITs & AIIMS</p>
+              <p className="text-xs text-slate-300 font-medium">Selections in IITs & AIIMS</p>
             </div>
 
-            <div className="glass-panel p-4 rounded-2xl text-left border-l-2 border-l-emerald-500">
+            <div className="glass-card-glow p-5 rounded-2xl text-left border-l-4 border-l-emerald-500 group">
               <div className="flex items-center gap-2 text-emerald-400 mb-1">
-                <Zap className="w-4 h-4" />
-                <span className="font-heading font-extrabold text-2xl sm:text-3xl text-white">96.4%</span>
+                <Zap className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-heading font-extrabold text-2xl sm:text-3xl text-white group-hover:text-emerald-300 transition-colors">96.4%</span>
               </div>
-              <p className="text-xs text-slate-400 font-medium">Success Rate in Qualification</p>
+              <p className="text-xs text-slate-300 font-medium">Success Rate in Qualification</p>
             </div>
 
-            <div className="glass-panel p-4 rounded-2xl text-left border-l-2 border-l-purple-500">
+            <div className="glass-card-glow p-5 rounded-2xl text-left border-l-4 border-l-purple-500 group">
               <div className="flex items-center gap-2 text-purple-400 mb-1">
-                <Cpu className="w-4 h-4" />
-                <span className="font-heading font-extrabold text-2xl sm:text-3xl text-white">24/7 AI</span>
+                <Cpu className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-heading font-extrabold text-2xl sm:text-3xl text-white group-hover:text-purple-300 transition-colors">24/7 AI</span>
               </div>
-              <p className="text-xs text-slate-400 font-medium">Instant Doubt Engine</p>
+              <p className="text-xs text-slate-300 font-medium">Instant Doubt Engine</p>
             </div>
           </motion.div>
 
@@ -123,3 +128,4 @@ export default function Hero({ onOpenConsultation }) {
     </section>
   );
 }
+

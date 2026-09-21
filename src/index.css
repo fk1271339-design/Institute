@@ -84,7 +84,13 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-/* Glassmorphism Styles */
+.text-gradient-rose {
+  background: linear-gradient(135deg, #fb7185 0%, #f43f5e 50%, #e11d48 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Enhanced Glassmorphism & Glowing Card Styles */
 .glass-panel {
   background: rgba(15, 23, 42, 0.65);
   backdrop-filter: blur(16px);
@@ -93,23 +99,58 @@ body {
 }
 
 .glass-panel-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel-hover:hover {
-  background: rgba(30, 41, 59, 0.75);
-  border-color: rgba(56, 189, 248, 0.3);
-  box-shadow: 0 0 25px -5px rgba(56, 189, 248, 0.15);
-  transform: translateY(-2px);
+  background: rgba(30, 41, 59, 0.85);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 10px 35px -5px rgba(56, 189, 248, 0.2), 0 0 15px 0 rgba(99, 102, 241, 0.15);
+  transform: translateY(-4px) scale(1.01);
+}
+
+.glass-card-glow {
+  position: relative;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.glass-card-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  transition: left 0.7s ease-in-out;
+}
+
+.glass-card-glow:hover::before {
+  left: 100%;
+}
+
+.glass-card-glow:hover {
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 30px -5px rgba(56, 189, 248, 0.25), inset 0 0 15px rgba(56, 189, 248, 0.05);
+  transform: translateY(-5px);
 }
 
 .glass-card-active {
   background: rgba(30, 41, 59, 0.85);
-  border-color: rgba(99, 102, 241, 0.5);
-  box-shadow: 0 0 30px -5px rgba(99, 102, 241, 0.3);
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 0 35px -5px rgba(99, 102, 241, 0.35);
 }
 
-/* Ambient Background Grid Pattern */
+/* Ambient Background Grid & Dot Patterns */
 .bg-grid-pattern {
   background-size: 40px 40px;
   background-image: 
@@ -118,24 +159,34 @@ body {
 }
 
 .bg-dots-pattern {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
-/* Glowing Pulsing Orbs */
+/* Keyframe Micro-Animations */
 @keyframes floatSlow {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(3deg); }
+  50% { transform: translateY(-12px) rotate(2deg); }
 }
 
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.08); }
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.06); }
 }
 
 @keyframes spinSlow {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@keyframes shimmerGlow {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes borderGlowPulse {
+  0%, 100% { border-color: rgba(56, 189, 248, 0.3); }
+  50% { border-color: rgba(168, 85, 247, 0.6); }
 }
 
 .animate-float {
@@ -147,10 +198,14 @@ body {
 }
 
 .animate-spin-slow {
-  animation: spinSlow 20s linear infinite;
+  animation: spinSlow 22s linear infinite;
 }
 
-/* Custom Scroll Trigger Masking */
+.animated-border {
+  animation: borderGlowPulse 4s ease-in-out infinite;
+}
+
+/* Custom Scroll & 3D Helpers */
 .perspective-1000 {
   perspective: 1000px;
 }
@@ -158,3 +213,17 @@ body {
 .transform-style-3d {
   transform-style: preserve-3d;
 }
+
+/* Glow Badge Utility */
+.badge-glow-cyan {
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  box-shadow: 0 0 15px -3px rgba(6, 182, 212, 0.3);
+}
+
+.badge-glow-gold {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0 15px -3px rgba(245, 158, 11, 0.3);
+}
+
