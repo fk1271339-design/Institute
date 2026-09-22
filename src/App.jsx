@@ -33,8 +33,12 @@ export default function App() {
   const handleOpenSearch = () => setIsSearchOpen(true);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-300">
-      
+<div className="min-h-screen bg-[var(--background)] text-[var(--text-primary)] flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-100">
+
+      <a href="#main" className="skip-link">
+        Skip to main content
+      </a>
+
       {/* 1. Header / Navbar */}
       <Navbar 
         onOpenConsultation={handleOpenConsultation}
@@ -42,7 +46,7 @@ export default function App() {
       />
 
       {/* Main Page Content */}
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         
         {/* 2. Hero Section */}
         <Hero 
