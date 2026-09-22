@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BookOpen, Search, Star, Users, Calendar, ArrowRight, 
-  CheckCircle, Sparkles, Filter, ChevronRight, Award 
+  CheckCircle, Sparkles, Filter, ChevronRight, Award,
+  LayoutGrid, Sliders, ChevronLeft
 } from 'lucide-react';
 import { coursesData } from '../../data/mockData';
 
 export default function CourseExplorer({ onSelectCourse }) {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   const categories = ['All', 'IIT-JEE', 'NEET', 'Olympiad', 'Foundation', 'AI & Tech'];
 
@@ -20,10 +22,18 @@ export default function CourseExplorer({ onSelectCourse }) {
     return matchesCat && matchesSearch;
   });
 
+  const handleNextSlide = () => {
+    setCurrentSlideIndex(prev => (prev + 1) % Math.max(1, filteredCourses.length));
+  };
+
+  const handlePrevSlide = () => {
+    setCurrentSlideIndex(prev => (prev - 1 + filteredCourses.length) % Math.max(1, filteredCourses.length));
+  };
+
   return (
-    <section id="courses" className="py-24 relative bg-slate-950 border-t border-slate-800/80">
+    <section id="courses" className="py-24 relative bg-slate-950 border-t border-slate-800/80 overflow-hidden">
       
-      {/* Background Glow */}
+      {/* Background Ambient Glow */}
       <div className="absolute top-1/3 right-10 w-96 h-96 bg-cyan-600/10 blur-[130px] rounded-full pointer-events-none animate-pulse-glow" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -50,7 +60,10 @@ export default function CourseExplorer({ onSelectCourse }) {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setSelectedCategory(cat)}
+                onClick={() => {
+                  setSelectedCategory(cat);
+                  setCurrentSlideIndex(0);
+                }}
                 className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer ${
                   selectedCategory === cat
                     ? 'bg-gradient-to-r from-cyan-400 to-indigo-400 text-slate-950 shadow-md shadow-cyan-500/30 font-bold scale-105'
@@ -87,7 +100,7 @@ export default function CourseExplorer({ onSelectCourse }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
-                className="glass-card-glow p-6 rounded-3xl border border-slate-800 flex flex-col justify-between hover:border-cyan-500/50 transition-all duration-300 group shadow-xl hover:shadow-cyan-950/40"
+                className="glass-card-glow p-6 rounded-3xl border border-slate-800 flex flex-col justify-between hover:border-cyan-500/50 transition-all duration-300 group shadow-xl hover:shadow-cyan-950/40 bg-slate-950/80"
               >
                 <div>
                   {/* Card Header Tag & Rating */}
@@ -173,4 +186,3 @@ export default function CourseExplorer({ onSelectCourse }) {
     </section>
   );
 }
-

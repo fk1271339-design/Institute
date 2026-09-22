@@ -386,3 +386,79 @@ export const upcomingEvents = [
     registeredCount: 4210
   }
 ];
+
+export const testimonialsData = [
+  {
+    id: "testi-1",
+    name: "Aarav K. Sharma",
+    rank: "AIR 01 - JEE Advanced 2025",
+    category: "JEE Toppers",
+    type: "Student",
+    image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80",
+    text: "The 3D visual physics simulations by Dr. Rajesh Sharma completely transformed my electrodynamics understanding. Whenever I got stuck, the 24/7 AI doubt engine resolved it within minutes.",
+    rating: 5,
+    highlight: "Scored 352/360 in JEE Advanced",
+    videoTitle: "Aarav's Strategy to AIR 1"
+  },
+  {
+    id: "testi-2",
+    name: "Ananya S. Roy",
+    rank: "AIR 04 - NEET UG 2025",
+    category: "NEET Toppers",
+    type: "Student",
+    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+    text: "Dr. Sunita Rao's 3D anatomy modules and NCERT line-by-line micro test series gave me absolute confidence. Scoring 360/360 in Biology was smooth because of Nexora's precision drills.",
+    rating: 5,
+    highlight: "360/360 in NEET Biology",
+    videoTitle: "Ananya's Journey to AIIMS New Delhi"
+  },
+  {
+    id: "testi-3",
+    name: "Dr. Ramesh S. Roy",
+    rank: "Father of Ananya Roy (AIR 04 NEET)",
+    category: "Parents",
+    type: "Parent",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+    text: "As a practicing surgeon myself, I was amazed by Nexora’s technical depth and daily progress reports sent directly to parents. They gave my daughter absolute focus without stress.",
+    rating: 5,
+    highlight: "Parent of AIIMS Scholar",
+    videoTitle: "Why Dr. Roy Chose Nexora for Ananya"
+  },
+  {
+    id: "testi-4",
+    name: "Devansh V. Mehta",
+    rank: "AIR 12 - JEE Advanced 2025",
+    category: "JEE Toppers",
+    type: "Student",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+    text: "I was in a droppers batch and had panic issues during mock tests. Nexora’s psychometric stamina drills and 1-on-1 counselor audits turned my weak areas into my strongest points.",
+    rating: 5,
+    highlight: "Dropper to AIR 12 Jump",
+    videoTitle: "Overcoming Mock Test Anxiety"
+  },
+  {
+    id: "testi-5",
+    name: "Riya P. Sen",
+    rank: "AIR 27 - NEET UG 2025",
+    category: "NEET Toppers",
+    type: "Student",
+    image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80",
+    text: "The NTA exam simulator portal is identical to the actual exam hall interface. When I sat for NEET, it felt like just another Sunday test at Nexora Apex Campus.",
+    rating: 5,
+    highlight: "Scored 705/720 in NEET",
+    videoTitle: "Riya's Test Series Blueprint"
+  },
+  {
+    id: "testi-6",
+    name: "Sunil & Pratibha Mehta",
+    rank: "Parents of Devansh Mehta (AIR 12 JEE)",
+    category: "Parents",
+    type: "Parent",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
+    text: "The faculty mentor calls us every fortnight to discuss our child's mental well-being and academic graphs. The level of care and personal attention is unprecedented in India.",
+    rating: 5,
+    highlight: "Parent Experience Review",
+    videoTitle: "Parent Review on Super-30 Mentorship"
+  }
+];
+

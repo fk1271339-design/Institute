@@ -7,10 +7,10 @@ import {
 
 export default function FinalCTA({ onOpenConsultation }) {
   return (
-    <section className="py-24 relative bg-slate-950 overflow-hidden border-t border-slate-800/80">
+    <section className="py-24 relative z-10 bg-slate-950 overflow-hidden border-t border-slate-800/80">
       
       {/* Background Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-gradient-to-r from-cyan-600/25 via-indigo-600/20 to-purple-600/25 blur-[180px] rounded-full pointer-events-none animate-pulse-glow" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-gradient-to-r from-cyan-600/20 via-indigo-600/20 to-purple-600/20 blur-[180px] rounded-full pointer-events-none animate-pulse-glow" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -22,7 +22,7 @@ export default function FinalCTA({ onOpenConsultation }) {
               <span>Begin Your Rank Journey Today</span>
             </div>
 
-            <h2 className="font-heading text-3xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
+            <h2 className="font-heading text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
               Ready to Turn Your Dream of <br className="hidden sm:inline" />
               <span className="text-gradient-cyan">IIT or AIIMS into Reality?</span>
             </h2>
@@ -72,4 +72,3 @@ export default function FinalCTA({ onOpenConsultation }) {
     </section>
   );
 }
-
