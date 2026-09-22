@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Trophy, Award, Star, CheckCircle, TrendingUp, 
-  Calculator, Sparkles, ArrowRight, Building2, Quote, CheckCircle2 
+  Calculator, Sparkles, ArrowRight, Building2, Quote, CheckCircle2, Info 
 } from 'lucide-react';
 import { resultsData, statsOverview } from '../../data/mockData';
 
@@ -10,7 +10,7 @@ export default function ResultsDashboard() {
   const [examType, setExamType] = useState('JEE');
   const [score, setScore] = useState(290);
 
-  // Simple dynamic rank prediction math logic
+  // Dynamic rank prediction logic
   const maxScore = examType === 'JEE' ? 360 : 720;
   const normalizedScore = Math.min(score, maxScore);
 
@@ -51,10 +51,10 @@ export default function ResultsDashboard() {
   }
 
   return (
-    <section id="results" className="py-24 relative bg-slate-950/95 border-t border-slate-800/80 bg-dots-pattern">
+    <section id="results" className="py-24 relative bg-slate-950/95 border-t border-slate-800/80 bg-dots-pattern overflow-hidden">
       
-      {/* Ambient Radial Glow */}
-      <div className="absolute top-1/4 left-1/3 w-[650px] h-[450px] bg-amber-500/15 blur-[160px] rounded-full pointer-events-none animate-pulse-glow" />
+      {/* Tamed Ambient Glow */}
+      <div className="absolute top-1/4 left-1/3 w-[600px] h-[400px] bg-amber-500/10 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -75,18 +75,18 @@ export default function ResultsDashboard() {
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-16">
           {statsOverview.map((st, i) => (
-            <div key={i} className="glass-card-glow p-6 rounded-3xl border border-slate-800 text-center relative overflow-hidden group">
+            <div key={i} className="glass-card-glow p-6 rounded-3xl border border-slate-800 text-center relative overflow-hidden group bg-slate-950/80">
               <span className="text-xs text-slate-400 font-mono-tech uppercase block mb-1">
                 {st.label}
               </span>
-              <span className="font-heading text-3xl sm:text-5xl font-extrabold text-gradient-gold group-hover:scale-105 transition-transform inline-block">
+              <span className="font-heading text-3xl sm:text-5xl font-extrabold text-gradient-gold inline-block">
                 {st.prefix}{st.value.toLocaleString()}{st.suffix}
               </span>
             </div>
           ))}
         </div>
 
-        {/* Topper Cards Carousel Grid */}
+        {/* Topper Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           {resultsData.map((topper, idx) => (
             <motion.div
@@ -95,7 +95,7 @@ export default function ResultsDashboard() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="glass-card-glow p-5 rounded-3xl border border-slate-800 hover:border-amber-500/60 transition-all duration-300 flex flex-col justify-between group shadow-xl"
+              className="glass-card-glow p-5 rounded-3xl border border-slate-800 hover:border-amber-500/50 transition-all duration-300 flex flex-col justify-between group shadow-xl bg-slate-950/90"
             >
               <div>
                 <div className="relative mb-4 rounded-2xl overflow-hidden h-52 bg-slate-900 border border-slate-800">
@@ -106,8 +106,8 @@ export default function ResultsDashboard() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
                   
-                  {/* Metallic Rank Badge */}
-                  <div className="absolute top-3 left-3 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 text-slate-950 font-heading font-black text-sm px-3.5 py-1 rounded-full shadow-lg shadow-amber-950/60 flex items-center gap-1.5">
+                  {/* Metallic Rank Badge - Gold restricted strictly for ranks */}
+                  <div className="absolute top-3 left-3 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 text-slate-950 font-heading font-black text-xs sm:text-sm px-3.5 py-1 rounded-full shadow-lg flex items-center gap-1.5">
                     <Trophy className="w-3.5 h-3.5 text-slate-950" />
                     <span>{topper.rank}</span>
                   </div>
@@ -142,13 +142,13 @@ export default function ResultsDashboard() {
         </div>
 
         {/* Interactive Rank Predictor Tool */}
-        <div className="glass-card-glow p-6 sm:p-10 rounded-3xl border border-amber-500/40 shadow-2xl relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900">
+        <div className="glass-card-glow p-6 sm:p-10 rounded-3xl border border-amber-500/30 shadow-2xl relative overflow-hidden bg-slate-950">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono-tech uppercase mb-4">
                 <Calculator className="w-3.5 h-3.5" />
-                <span>Interactive AI Tool</span>
+                <span>Interactive AI Calculator</span>
               </div>
 
               <h3 className="font-heading text-2xl sm:text-4xl font-extrabold text-white mb-3">
@@ -167,7 +167,7 @@ export default function ResultsDashboard() {
                   }}
                   className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                     examType === 'JEE'
-                      ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-950 shadow-md shadow-amber-500/30'
+                      ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-950 shadow-md shadow-amber-500/20'
                       : 'bg-slate-900 text-slate-300 border border-slate-800 hover:border-slate-700'
                   }`}
                 >
@@ -181,7 +181,7 @@ export default function ResultsDashboard() {
                   }}
                   className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                     examType === 'NEET'
-                      ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-950 shadow-md shadow-amber-500/30'
+                      ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-950 shadow-md shadow-amber-500/20'
                       : 'bg-slate-900 text-slate-300 border border-slate-800 hover:border-slate-700'
                   }`}
                 >
@@ -190,7 +190,7 @@ export default function ResultsDashboard() {
               </div>
 
               {/* Slider Input */}
-              <div className="space-y-3 mb-6">
+              <div className="space-y-3 mb-4">
                 <div className="flex justify-between text-xs font-mono-tech text-slate-300">
                   <span>TARGET SCORE SLIDER</span>
                   <span className="font-bold text-amber-400 text-base">{normalizedScore} / {maxScore}</span>
@@ -203,6 +203,12 @@ export default function ResultsDashboard() {
                   onChange={(e) => setScore(Number(e.target.value))}
                   className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-400"
                 />
+              </div>
+
+              {/* Demo Disclaimer */}
+              <div className="flex items-center gap-1.5 text-[11px] font-mono-tech text-slate-400 italic">
+                <Info className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <span>Illustrative estimate — actual rank depends on examination performance and official results.</span>
               </div>
             </div>
 
@@ -241,4 +247,3 @@ export default function ResultsDashboard() {
     </section>
   );
 }
-
