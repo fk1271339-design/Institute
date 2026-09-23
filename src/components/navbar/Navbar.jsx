@@ -1,242 +1,147 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Search, ArrowRight, GraduationCap, Sparkles } from "lucide-react";
-import { navLinks } from "../../data/site";
-import { EASE } from "../ui/SectionHeading";
+import { useEffect, useState } from 'react';
+import { Menu, X, Search, CalendarCheck } from 'lucide-react';
+import { brand, navLinks } from '../../data/site';
 
-export function OrbLogo({ size = 40 }) {
+function LogoMark() {
   return (
-    <svg
-      viewBox="0 0 40 40"
-      width={size}
-      height={size}
-      aria-hidden="true"
-      className="drop-shadow-[0_0_14px_rgba(34,211,238,0.35)]"
-    >
+    <svg width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true" className="drop-shadow-[0_2px_8px_rgba(16,185,129,0.35)]">
+      <rect width="40" height="40" rx="11" fill="#0b2430" />
+      <rect x="1.5" y="1.5" width="37" height="37" rx="9.5" stroke="url(#nxg)" strokeWidth="3" />
+      <path d="M12 27.5 V12.5 h6.4 c3.6 0 5.8 1.9 5.8 5.1 0 2.2-1.2 3.9-3.2 4.7 l4.2 5.2 h-4.6 l-3.6-4.6 h-1.4 v4.6 Z m2.6-6.6 h3.5 c1.6 0 2.5-0.8 2.5-2.1 0-1.3-0.9-2.1-2.5-2.1 h-3.5 Z" fill="#35e0a5" />
       <defs>
-        <linearGradient id="orbGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#22d3ee" />
-          <stop offset="45%" stopColor="#38bdf8" />
-          <stop offset="100%" stopColor="#6366f1" />
+        <linearGradient id="nxg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#10b981" />
+          <stop offset="1" stopColor="#34d399" />
         </linearGradient>
       </defs>
-      <circle cx="20" cy="20" r="16" fill="none" stroke="url(#orbGrad)" strokeOpacity="0.5" strokeWidth="1" />
-      <circle cx="20" cy="20" r="9" fill="url(#orbGrad)" opacity="0.9" />
-      <ellipse cx="20" cy="20" rx="9" ry="3.6" fill="none" stroke="#0b1220" strokeWidth="1" strokeOpacity="0.6" transform="rotate(-24 20 20)" />
-      <ellipse cx="20" cy="20" rx="9" ry="3.6" fill="none" stroke="#0b1220" strokeWidth="1" strokeOpacity="0.6" transform="rotate(34 20 20)" />
-      <circle cx="20" cy="20" r="3" fill="#04121f" stroke="#22d3ee" strokeWidth="1" />
     </svg>
   );
 }
 
 export default function Navbar({ onOpenConsultation, onOpenSearch }) {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
-  const [matches, setMatches] = useState({ lg: false, xl: false });
-
-  useEffect(() => {
-    const compute = () => {
-      setMatches({ lg: window.innerWidth >= 1024, xl: window.innerWidth >= 1280 });
-    };
-    compute();
-    window.addEventListener("resize", compute);
-    return () => window.removeEventListener("resize", compute);
-  }, []);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Active section indicator via IntersectionObserver.
   useEffect(() => {
-    const sections = navLinks
-      .map((l) => document.querySelector(l.href))
-      .filter(Boolean);
-    if (!sections.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(`#${entry.target.id}`);
-        });
-      },
-      { rootMargin: "-35% 0px -55% 0px", threshold: 0 }
-    );
-
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
-
-  const closeMenu = useCallback(() => setOpen(false), []);
-
-  useEffect(() => {
+    if (!menuOpen) return undefined;
     const onKey = (e) => {
-      if (e.key === "Escape") {
-        setOpen(false);
-        onOpenSearch && false;
-      }
+      if (e.key === 'Escape') setMenuOpen(false);
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "py-2 bg-[var(--background)]/85 backdrop-blur-xl border-b border-[var(--border)] shadow-[0_8px_32px_-16px_rgba(2,6,23,0.8)]"
-          : "py-3.5 bg-transparent border-b border-transparent"
-      }`}
-    >
-      <div className="container-custom">
-        <div className="flex items-center justify-between gap-4">
-          {/* Logo */}
-          <a href="#top" className="flex items-center gap-2.5 group shrink-0" aria-label="Nexora Academy — home">
-            <OrbLogo size={scrolled ? 36 : 40} />
-            <div className="flex flex-col leading-none">
-              <div className="flex items-center gap-1.5">
-                <span className="font-heading text-lg font-extrabold tracking-tight text-white group-hover:text-cyan-400 transition-colors">
-                  NEXORA
-                </span>
-                <span className="badge badge-cyan !py-0 !px-1.5 !text-[9px] !tracking-widest">PRO</span>
-              </div>
-              <span className="mt-1 text-[9px] tracking-[0.22em] uppercase text-[var(--text-secondary)] font-mono-tech">
-                Academy of Excellence
+    <header className="sticky top-0 z-50">
+      <div
+        className={`transition-all duration-300 ${
+          scrolled
+            ? 'bg-[var(--surface)]/90 backdrop-blur-xl border-b border-[var(--border)] shadow-[0_8px_30px_-18px_rgba(11,36,48,0.3)]'
+            : 'bg-[var(--background)]/80 backdrop-blur-md border-b border-transparent'
+        }`}
+      >
+        <nav aria-label="Primary" className="container-custom flex items-center justify-between gap-4 py-3.5">
+          <a href="#main" className="flex items-center gap-2.5 shrink-0" onClick={closeMenu}>
+            <LogoMark />
+            <span className="flex flex-col leading-none">
+              <span className="font-heading text-lg font-extrabold tracking-tight text-[var(--text-primary)]">
+                {brand.shortName}
               </span>
-            </div>
+              <span className="text-[10px] font-mono-tech uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                Academy · demo
+              </span>
+            </span>
           </a>
 
-          {/* Desktop nav — full links at xl, core links at lg */}
-          <nav
-            aria-label="Primary"
-            className={`${matches.lg ? "flex" : "hidden"} items-center gap-0.5 bg-[var(--surface-raised)]/70 backdrop-blur-xl border border-[var(--border-subtle)] rounded-full px-2 py-1`}
-          >
-            {(matches.xl ? navLinks : navLinks.slice(0, 6)).map((link) => {
-              const active = activeSection === link.href;
-              return (
+          <ul className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <li key={link.id}>
                 <a
-                  key={link.name}
                   href={link.href}
-                  aria-current={active ? "true" : undefined}
-                  className={`relative px-3 py-1.5 text-xs font-medium rounded-full transition-colors duration-200 whitespace-nowrap ${
-                    active
-                      ? "text-cyan-300"
-                      : "text-[var(--text-secondary)] hover:text-white hover:bg-[var(--surface)]"
-                  }`}
+                  className="px-3 py-2 rounded-full text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--accent-green-deep)] hover:bg-[var(--surface-hover)] transition-colors"
                 >
-                  {active && (
-                    <motion.span
-                      layoutId="nav-active-pill"
-                      transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                      className="absolute inset-0 rounded-full bg-cyan-500/10 border border-cyan-500/30"
-                    />
-                  )}
-                  <span className="relative">{link.name}</span>
+                  {link.name}
                 </a>
-              );
-            })}
-          </nav>
+              </li>
+            ))}
+          </ul>
 
-          {/* Right actions */}
-          <div className="hidden lg:flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
             <button
+              type="button"
               onClick={onOpenSearch}
-              aria-label="Search courses and content"
-              className="p-2.5 rounded-full text-[var(--text-secondary)] hover:text-cyan-300 bg-[var(--surface-raised)]/70 border border-[var(--border-subtle)] hover:border-cyan-500/40 transition-all cursor-pointer"
-              title="Search"
+              className="p-2.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)] hover:text-[var(--accent-green-deep)] hover:border-[var(--border-accent)] transition-colors cursor-pointer"
+              aria-label="Search FAQs and programs (Ctrl K)"
             >
-              <Search className="w-4 h-4" />
+              <Search className="w-[18px] h-[18px]" />
             </button>
-
-            <a
-              href="#scholarship"
-              className="hidden xl:inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-full text-cyan-300 bg-cyan-500/10 border border-cyan-500/25 hover:bg-cyan-500/15 transition-all"
+            <button
+              type="button"
+              onClick={onOpenConsultation}
+              className="btn btn-primary btn-sm hidden sm:inline-flex"
             >
-              <GraduationCap className="w-3.5 h-3.5" />
-              <span>Scholarship</span>
-            </a>
-
-            <button onClick={onOpenConsultation} className="btn btn-primary btn-sm !hidden md:inline-flex group">
-              <span>Book Counselling</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+              <CalendarCheck className="w-4 h-4" aria-hidden="true" />
+              Book a free session
+            </button>
+            <button
+              type="button"
+              className="lg:hidden p-2.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] cursor-pointer"
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            >
+              {menuOpen ? <X className="w-[18px] h-[18px]" /> : <Menu className="w-[18px] h-[18px]" />}
             </button>
           </div>
-
-          {/* Mobile controls */}
-          <div className="flex lg:hidden items-center gap-2">
-            <button
-              onClick={onOpenSearch}
-              aria-label="Search courses and content"
-              className="p-2.5 rounded-xl text-[var(--text-secondary)] bg-[var(--surface-raised)]/80 border border-[var(--border-subtle)] cursor-pointer"
-            >
-              <Search className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => setOpen((v) => !v)}
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-              className="p-2.5 rounded-xl text-white bg-[var(--surface-raised)]/80 border border-[var(--border-subtle)] cursor-pointer"
-            >
-              {open ? <X className="w-5 h-5 text-cyan-300" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
-        </div>
+        </nav>
       </div>
 
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            key="mobile-menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.35, ease: EASE }}
-            className="lg:hidden overflow-hidden bg-[var(--background)]/95 backdrop-blur-2xl border-b border-[var(--border)]"
-          >
-            <div className="container-custom py-5">
-              <nav aria-label="Mobile" className="grid grid-cols-2 gap-2">
-                {navLinks.map((link) => (
+      {menuOpen && (
+        <div id="mobile-menu" className="lg:hidden fixed inset-x-0 top-[65px] bottom-0 z-40 bg-[var(--background)]/95 backdrop-blur-xl">
+          <div className="container-custom py-6 h-full flex flex-col">
+            <ul className="flex flex-col gap-1 overflow-y-auto">
+              {navLinks.map((link) => (
+                <li key={link.id}>
                   <a
-                    key={link.name}
                     href={link.href}
                     onClick={closeMenu}
-                    className="px-4 py-3 text-xs font-semibold text-[var(--text-secondary)] bg-[var(--surface-raised)]/70 border border-[var(--border-subtle)] rounded-xl hover:text-cyan-300 hover:border-cyan-500/30 transition-all flex items-center justify-between"
+                    className="flex items-center justify-between py-3 px-3 rounded-xl text-base font-bold text-[var(--text-primary)] hover:text-[var(--accent-green-deep)] hover:bg-[var(--surface-hover)] transition-colors"
                   >
-                    <span>{link.name}</span>
-                    <ArrowRight className="w-3 h-3 opacity-40" />
+                    {link.name}
                   </a>
-                ))}
-              </nav>
-
-              <div className="mt-4 pt-4 border-t border-[var(--border)] grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <button
-                  onClick={() => {
-                    closeMenu();
-                    onOpenConsultation();
-                  }}
-                  className="btn btn-primary btn-sm w-full"
-                >
-                  Book Free Counselling
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-                <a
-                  href="#scholarship"
-                  onClick={closeMenu}
-                  className="btn btn-ghost btn-sm w-full"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
-                  NSAT Scholarship Test
-                </a>
-              </div>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-auto pt-6 pb-4">
+              <button
+                type="button"
+                onClick={() => {
+                  closeMenu();
+                  onOpenConsultation();
+                }}
+                className="btn btn-primary w-full"
+              >
+                <CalendarCheck className="w-4 h-4" aria-hidden="true" />
+                Book a free session
+              </button>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
