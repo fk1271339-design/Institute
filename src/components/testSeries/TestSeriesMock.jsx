@@ -1,231 +1,297 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  MonitorPlay, Cpu, TrendingUp, FileCheck, Clock, 
-  CheckCircle2, AlertTriangle, Sparkles, BarChart2, Shield 
-} from 'lucide-react';
-import { testSeriesFeatures } from '../../data/mockData';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MonitorPlay, Clock, CheckCircle2, Sparkles, PlayCircle } from "lucide-react";
+import {
+  testSeriesFeatures,
+  demoExam,
+  analyticsData,
+  weakTopics,
+  performanceBars,
+  testSeriesConfig,
+  toneMap,
+} from "../../data/testSeries";
+import { SectionHeading, EASE } from "../ui/SectionHeading";
 
 export default function TestSeriesMock() {
-  const [activeTab, setActiveTab] = useState('live-exam');
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [tab, setTab] = useState("live-exam");
+  const [selected, setSelected] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
 
   return (
-    <section id="test-series" className="py-24 relative bg-slate-950 border-t border-slate-800/80">
-      
-      {/* Background Radial Glow */}
-      <div className="absolute top-1/2 right-1/4 w-[600px] h-[400px] bg-indigo-600/10 blur-[150px] rounded-full pointer-events-none" />
+    <section id="test-series" className="section-padding relative bg-[var(--background)] border-y border-[var(--border-subtle)] overflow-hidden">
+      <div className="absolute top-1/3 right-[-6rem] w-[480px] h-[420px] bg-indigo-500/[0.08] blur-[150px] rounded-full pointer-events-none" aria-hidden="true" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-mono-tech uppercase tracking-widest mb-4">
-            <MonitorPlay className="w-3.5 h-3.5" />
-            <span>Nexora Test Portal</span>
-          </div>
-          <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Quantum All-India <span className="text-gradient-cyan">Test Series & AI Analytics</span>
-          </h2>
-          <p className="mt-4 text-slate-300 text-base sm:text-lg">
-            Experience the exact NTA computer-based testing interface coupled with instant machine-learning diagnostics.
-          </p>
-        </div>
+      <div className="container-custom relative z-10">
+        <SectionHeading
+          badge={testSeriesConfig.badge}
+          badgeIcon={MonitorPlay}
+          headlineTop={testSeriesConfig.headlineTop}
+          headlineGradient={testSeriesConfig.headlineGradient}
+          support={testSeriesConfig.support}
+        />
 
-        {/* Feature Highlights Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {testSeriesFeatures.map((feat) => (
-            <div key={feat.id} className="glass-panel p-5 rounded-2xl border border-slate-800 text-left">
-              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 w-fit mb-4">
-                <Cpu className="w-5 h-5" />
+        {/* Feature highlights */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+          {testSeriesFeatures.map((f) => (
+            <div key={f.id} className="surface-base surface-hover p-5 bg-[var(--surface-raised)]/50">
+              <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/25 flex items-center justify-center mb-4">
+                <Sparkles className="w-5 h-5 text-cyan-300" />
               </div>
-              <h3 className="font-heading text-base font-bold text-white mb-2">
-                {feat.title}
-              </h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                {feat.desc}
-              </p>
+              <h3 className="font-heading text-sm font-bold text-white mb-1.5">{f.title}</h3>
+              <p className="text-xs leading-relaxed text-[var(--text-secondary)]">{f.desc}</p>
             </div>
           ))}
         </div>
 
-        {/* Interactive Student Portal Mock Window */}
-        <div className="glass-panel rounded-3xl border border-slate-800 overflow-hidden shadow-2xl bg-slate-950">
-          
-          {/* Portal Top Bar Window Controls */}
-          <div className="bg-slate-900 px-6 py-4 border-b border-slate-800 flex items-center justify-between">
+        {/* Product preview window */}
+        <div className="surface-base overflow-hidden rounded-[1.75rem] bg-[var(--background)] border-[var(--border-strong)] shadow-2xl">
+          {/* Window bar */}
+          <div className="bg-[var(--surface-raised)] px-5 sm:px-6 py-3.5 border-b border-[var(--border)] flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded-full bg-rose-500/80" />
-                <span className="w-3 h-3 rounded-full bg-amber-500/80" />
-                <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+              <div className="flex items-center gap-1.5" aria-hidden="true">
+                <span className="w-2.5 h-2.5 rounded-full bg-[var(--danger)]/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
               </div>
-              <span className="text-xs font-mono-tech text-slate-400 border-l border-slate-800 pl-3">
-                Nexora NTA Exam Portal v4.2 - Live Simulation
+              <span className="font-mono-tech text-[11px] text-[var(--text-tertiary)] border-l border-[var(--border)] pl-3 truncate">
+                {testSeriesConfig.windowsTitle}
               </span>
             </div>
 
-            {/* Portal Tab Switcher */}
             <div className="flex items-center gap-2">
-              <button
-                onClick={() => setActiveTab('live-exam')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  activeTab === 'live-exam' 
-                    ? 'bg-cyan-500 text-slate-950 font-bold' 
-                    : 'text-slate-400 hover:text-white bg-slate-800/50'
-                }`}
-              >
-                1. Exam Interface
-              </button>
-
-              <button
-                onClick={() => setActiveTab('analytics')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  activeTab === 'analytics' 
-                    ? 'bg-cyan-500 text-slate-950 font-bold' 
-                    : 'text-slate-400 hover:text-white bg-slate-800/50'
-                }`}
-              >
-                2. AI Analytics Radar
-              </button>
+              {[
+                { key: "live-exam", label: "1. Exam Interface" },
+                { key: "analytics", label: "2. AI Analytics" },
+              ].map((t) => (
+                <button
+                  key={t.key}
+                  onClick={() => setTab(t.key)}
+                  aria-pressed={tab === t.key}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    tab === t.key
+                      ? "bg-gradient-to-r from-cyan-400 to-blue-500 text-[#04121f] font-bold shadow-md shadow-cyan-500/20"
+                      : "text-[var(--text-secondary)] bg-[var(--surface)] hover:text-white border border-transparent"
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Tab Content 1: Live Exam Simulator */}
-          {activeTab === 'live-exam' && (
-            <div className="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
-              
-              {/* Question Main Panel */}
-              <div className="lg:col-span-8 space-y-6">
-                <div className="flex items-center justify-between bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 text-xs font-mono-tech">
-                  <span className="text-cyan-400 font-bold">PHYSICS - SECTION A (JEE ADVANCED MOCK 04)</span>
-                  <div className="flex items-center gap-1.5 text-amber-400 font-bold">
-                    <Clock className="w-4 h-4" />
-                    <span>Time Left: 02:45:18</span>
+          <AnimatePresence mode="wait">
+            {tab === "live-exam" ? (
+              <motion.div
+                key="exam"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="p-5 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6"
+              >
+                {/* Question panel */}
+                <div className="lg:col-span-8 space-y-5">
+                  <div className="flex items-center justify-between bg-[var(--surface-raised)]/80 p-3.5 rounded-xl border border-[var(--border)] font-mono-tech text-xs">
+                    <span className="text-cyan-300 font-bold truncate pr-3">{demoExam.subject}</span>
+                    <span className="flex items-center gap-1.5 text-amber-300 font-bold shrink-0">
+                      <Clock className="w-4 h-4" />
+                      {demoExam.timeLeft}
+                    </span>
                   </div>
+
+                  <div className="p-5 rounded-2xl bg-[var(--surface-raised)]/50 border border-[var(--border)]">
+                    <span className="font-mono-tech text-[11px] text-[var(--text-tertiary)] block mb-2.5">
+                      QUESTION {demoExam.questionNumber} OF {demoExam.totalQuestions} ({demoExam.section})
+                    </span>
+                    <p className="text-sm sm:text-base font-medium text-slate-100 leading-relaxed mb-5">
+                      {demoExam.text}
+                    </p>
+
+                    <div className="space-y-2.5" role="radiogroup" aria-label="Answer options">
+                      {demoExam.options.map((opt) => {
+                        const isSel = selected === opt.id;
+                        return (
+                          <button
+                            key={opt.id}
+                            role="radio"
+                            aria-checked={isSel}
+                            onClick={() => setSelected(opt.id)}
+                            className={`w-full p-3.5 rounded-xl text-xs sm:text-sm text-left border transition-all flex items-center justify-between cursor-pointer ${
+                              isSel
+                                ? "bg-cyan-500/15 border-cyan-500/60 text-white font-semibold"
+                                : "bg-[var(--background)]/70 border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-white"
+                            }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <span className={`w-6 h-6 rounded-full font-mono text-xs flex items-center justify-center shrink-0 ${isSel ? "bg-cyan-400 text-[#04121f] font-bold" : "bg-[var(--surface)] text-[var(--text-tertiary)]"}`}>
+                                {opt.id}
+                              </span>
+                              <span>{opt.text}</span>
+                            </div>
+                            {isSel && <CheckCircle2 className="w-4 h-4 text-cyan-300 shrink-0" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-1">
+                    <button
+                      onClick={() => setSelected(null)}
+                      className="btn btn-ghost btn-sm !text-xs"
+                    >
+                      Clear Response
+                    </button>
+                    <button
+                      onClick={() => setSubmitted(true)}
+                      className="btn btn-primary btn-sm"
+                    >
+                      Save & Next →
+                    </button>
+                  </div>
+                  {submitted && (
+                    <p className="text-xs text-emerald-400 font-mono-tech flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      Response saved. This is a static preview — demo UI only.
+                    </p>
+                  )}
                 </div>
 
-                <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-                  <span className="text-xs font-mono-tech text-slate-400 block mb-2">QUESTION 14 OF 30 (SINGLE CORRECT)</span>
-                  <p className="text-sm sm:text-base font-semibold text-slate-100 leading-relaxed mb-4">
-                    A uniform solid sphere of mass <span className="font-mono text-cyan-400">M = 4.0 kg</span> and radius <span className="font-mono text-cyan-400">R = 0.5 m</span> rolls without slipping down an inclined plane of angle <span className="font-mono text-cyan-400">θ = 30°</span>. Calculate the linear acceleration of the center of mass of the sphere. (Take g = 10 m/s²)
-                  </p>
-
-                  {/* Options */}
-                  <div className="space-y-3">
-                    {[
-                      { id: 'A', text: '3.57 m/s² (5g / 7)' },
-                      { id: 'B', text: '2.50 m/s² (g / 4)' },
-                      { id: 'C', text: '4.20 m/s² (3g / 7)' },
-                      { id: 'D', text: '5.00 m/s² (g / 2)' }
-                    ].map((opt) => (
-                      <button
-                        key={opt.id}
-                        onClick={() => setSelectedOption(opt.id)}
-                        className={`w-full p-3.5 rounded-xl text-xs sm:text-sm font-medium text-left border transition-all flex items-center justify-between ${
-                          selectedOption === opt.id
-                            ? 'bg-cyan-500/20 border-cyan-500 text-white font-bold'
-                            : 'bg-slate-950/80 border-slate-800 text-slate-300 hover:border-slate-700'
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className={`w-6 h-6 rounded-full font-mono text-xs flex items-center justify-center ${selectedOption === opt.id ? 'bg-cyan-500 text-slate-950 font-bold' : 'bg-slate-900 text-slate-400'}`}>
-                            {opt.id}
-                          </span>
-                          <span>{opt.text}</span>
+                {/* Palette */}
+                <div className="lg:col-span-4 bg-[var(--surface-raised)]/60 p-5 rounded-2xl border border-[var(--border)] flex flex-col">
+                  <div>
+                    <span className="eyebrow-label block text-[10px] mb-3">Question Palette</span>
+                    <div className="grid grid-cols-5 gap-2 mb-5" aria-hidden="true">
+                      {Array.from({ length: demoExam.paletteTotal }).map((_, i) => (
+                        <div
+                          key={i}
+                          className={`aspect-square rounded-lg font-mono text-[11px] flex items-center justify-center font-bold border ${
+                            i === demoExam.currentIndex
+                              ? "bg-cyan-400 text-[#04121f] border-cyan-300"
+                              : i < demoExam.answeredCount
+                                ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
+                                : "bg-[var(--background)]/60 text-[var(--text-tertiary)] border-[var(--border)]"
+                          }`}
+                        >
+                          {i + 1}
                         </div>
-                        {selectedOption === opt.id && <CheckCircle2 className="w-4 h-4 text-cyan-400" />}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                      ))}
+                    </div>
 
-                <div className="flex items-center justify-between pt-2">
-                  <button className="px-4 py-2 text-xs font-semibold text-slate-400 bg-slate-900 rounded-xl border border-slate-800">
-                    Clear Response
-                  </button>
-                  <button 
-                    onClick={() => setIsSubmitted(true)}
-                    className="px-6 py-2.5 text-xs font-bold text-slate-950 bg-gradient-to-r from-cyan-400 to-indigo-300 rounded-xl shadow-lg shadow-cyan-500/20"
-                  >
-                    Save & Next Question →
-                  </button>
-                </div>
-              </div>
-
-              {/* Question Palette Right Panel */}
-              <div className="lg:col-span-4 bg-slate-900/80 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
-                <div>
-                  <span className="text-xs font-mono-tech text-slate-400 uppercase block mb-3">QUESTION PALETTE</span>
-                  <div className="grid grid-cols-5 gap-2 mb-6">
-                    {Array.from({ length: 20 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className={`w-9 h-9 rounded-lg font-mono text-xs flex items-center justify-center font-bold border ${
-                          i === 13 
-                            ? 'bg-cyan-500 text-slate-950 border-cyan-400 ring-2 ring-cyan-400/40' 
-                            : i < 13 
-                            ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40' 
-                            : 'bg-slate-950 text-slate-500 border-slate-800'
-                        }`}
-                      >
-                        {i + 1}
+                    <div className="space-y-2 text-[11px] font-mono-tech text-[var(--text-secondary)]">
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded bg-emerald-500/30 border border-emerald-500/50" />
+                        {demoExam.answeredCount} Answered
                       </div>
-                    ))}
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded bg-cyan-400" />
+                        Current active question
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded bg-[var(--surface)] border border-[var(--border-strong)]" />
+                        {demoExam.paletteTotal - demoExam.answeredCount} Unattempted
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="space-y-2 text-[11px] text-slate-400 font-mono-tech">
-                    <div className="flex items-center gap-2">
-                      <span className="w-3 h-3 rounded bg-emerald-500/40 border border-emerald-500" />
-                      <span>13 Answered</span>
+                  <div className="mt-5 pt-4 border-t border-[var(--border)]">
+                    <div className="p-3 rounded-xl bg-cyan-500/[0.07] border border-cyan-500/25 text-xs text-cyan-200">
+                      💡 {demoExam.aiTip}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="w-3 h-3 rounded bg-cyan-500 border border-cyan-400" />
-                      <span>Current Active Question</span>
+                  </div>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="analytics"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="p-5 sm:p-8 grid grid-cols-1 md:grid-cols-3 gap-5"
+              >
+                <AnimatePresence>
+                  {analyticsData.map((a, i) => (
+                    <motion.div
+                      key={a.label}
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.07, duration: 0.4, ease: EASE }}
+                      className="p-5 rounded-2xl bg-[var(--surface-raised)]/60 border border-[var(--border)]"
+                    >
+                      <span className={`font-mono-tech text-[11px] uppercase block mb-2 ${toneMap[a.tone]}`}>{a.label}</span>
+                      <span className="font-heading text-2xl font-bold text-white block mb-2">{a.value}</span>
+                      <p className="text-xs leading-relaxed text-[var(--text-secondary)]">{a.note}</p>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+
+                {/* Weak topics + performance */}
+                <div className="md:col-span-2 lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-5 mt-5 lg:mt-0">
+                  <div className="p-5 rounded-2xl bg-[var(--surface-raised)]/60 border border-[var(--border)]">
+                    <span className="font-mono-tech text-[11px] uppercase text-[var(--danger)] block mb-4">Weak Topic Detector</span>
+                    <div className="space-y-3">
+                      {weakTopics.map((w) => (
+                        <div key={w.topic}>
+                          <div className="flex justify-between text-xs mb-1">
+                            <span className="text-slate-200 font-medium">{w.topic}</span>
+                            <span className="font-mono-tech text-[var(--text-tertiary)]">{w.weakness}%</span>
+                          </div>
+                          <div className="h-1.5 rounded-full bg-[var(--surface-hover)] overflow-hidden">
+                            <motion.div
+                              initial={{ width: 0 }}
+                              whileInView={{ width: `${w.weakness}%` }}
+                              viewport={{ once: true }}
+                              transition={{ duration: 0.6, ease: EASE }}
+                              className="h-full bg-gradient-to-r from-rose-400 to-amber-400 rounded-full"
+                            />
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="w-3 h-3 rounded bg-slate-950 border border-slate-800" />
-                      <span>7 Unattempted</span>
+                  </div>
+
+                  <div className="p-5 rounded-2xl bg-[var(--surface-raised)]/60 border border-[var(--border)]">
+                    <span className="font-mono-tech text-[11px] uppercase text-cyan-300 block mb-4">Performance Tracker</span>
+                    <div className="space-y-4">
+                      {performanceBars.map((p) => (
+                        <div key={p.label}>
+                          <div className="flex justify-between text-xs mb-1">
+                            <span className="text-slate-200 font-medium">{p.label}</span>
+                            <span className="font-mono-tech text-[var(--text-tertiary)]">{p.value}%</span>
+                          </div>
+                          <div className="h-2 rounded-full bg-[var(--surface-hover)] overflow-hidden">
+                            <motion.div
+                              initial={{ width: 0 }}
+                              whileInView={{ width: `${p.value}%` }}
+                              viewport={{ once: true }}
+                              transition={{ duration: 0.6, ease: EASE }}
+                              className={`h-full ${p.tone} rounded-full`}
+                            />
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
-
-                <div className="pt-4 border-t border-slate-800">
-                  <div className="p-3 rounded-xl bg-cyan-950/40 border border-cyan-500/30 text-xs text-cyan-300">
-                    💡 AI Tip: You spend 1.8 mins on physics. Rotate to numerical questions first to maximize marks per minute.
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          )}
-
-          {/* Tab Content 2: AI Analytics Radar */}
-          {activeTab === 'analytics' && (
-            <div className="p-6 sm:p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
-                <span className="text-xs font-mono-tech text-cyan-400 uppercase block mb-2">SPEED VS ACCURACY</span>
-                <span className="font-heading text-3xl font-bold text-white mb-2 block">94.2%</span>
-                <p className="text-xs text-slate-400">High accuracy maintained on Rotational Mechanics & Electrostatics.</p>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
-                <span className="text-xs font-mono-tech text-amber-400 uppercase block mb-2">TIME WASTED AUDIT</span>
-                <span className="font-heading text-3xl font-bold text-white mb-2 block">4.5 Mins</span>
-                <p className="text-xs text-slate-400">Lost on Question 8 due to calculation mistake. Target focus on mental speed math.</p>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
-                <span className="text-xs font-mono-tech text-emerald-400 uppercase block mb-2">PREDICTED AIR RANGE</span>
-                <span className="font-heading text-3xl font-bold text-white mb-2 block">AIR 140 - 280</span>
-                <p className="text-xs text-slate-400">Based on All-India peer benchmark of 45,000+ test takers this week.</p>
-              </div>
-            </div>
-          )}
-
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
+        {/* Try Demo CTA */}
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-6 rounded-2xl bg-[var(--surface-raised)]/70 border border-[var(--border)]">
+          <div>
+            <h3 className="font-heading text-lg font-bold text-white">See the full portal live</h3>
+            <p className="text-sm text-[var(--text-secondary)] mt-1">
+              Take a 5-minute guided demo with the complete question palette and AI analytics.
+            </p>
+          </div>
+          <button className="btn btn-primary shrink-0 group" onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>
+            <PlayCircle className="w-4 h-4" />
+            {testSeriesConfig.ctaLabel}
+          </button>
+        </div>
       </div>
     </section>
   );

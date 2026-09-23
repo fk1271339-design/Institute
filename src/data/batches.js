@@ -1,0 +1,60 @@
+export const upcomingBatches = [
+  {
+    id: "batch-1",
+    name: "Zenith IIT-JEE Super-30 Phase II",
+    exam: "JEE Advanced 2027",
+    grade: "Class 11",
+    mode: "Hybrid (Offline + Live Interactive)",
+    startDate: "Oct 15, 2026",
+    timings: "4:00 PM – 8:30 PM IST",
+    seatsRemaining: 12,
+    totalSeats: 30,
+    center: "Nexora Apex Tower & Digital Portal",
+  },
+  {
+    id: "batch-2",
+    name: "Apex NEET Droppers Fast-Track",
+    exam: "NEET 2027",
+    grade: "Class 12 / Dropper",
+    mode: "Live Interactive 4K",
+    startDate: "Oct 12, 2026",
+    timings: "9:00 AM – 2:00 PM IST",
+    seatsRemaining: 9,
+    totalSeats: 40,
+    center: "Nexora Global Live Portal",
+  },
+  {
+    id: "batch-3",
+    name: "Quantum Olympiad Foundation",
+    exam: "Olympiad 2027",
+    grade: "Class 9 & 10",
+    mode: "Offline Classroom",
+    startDate: "Oct 20, 2026",
+    timings: "5:00 PM – 7:30 PM IST",
+    seatsRemaining: 4,
+    totalSeats: 25,
+    center: "Nexora Cyber City Campus",
+  },
+  {
+    id: "batch-4",
+    name: "Nexora STEM & AI Pioneers",
+    exam: "Skill Certification 2026",
+    grade: "Open for Class 8-12",
+    mode: "Project-Based Weekend",
+    startDate: "Oct 18, 2026",
+    timings: "Weekends 10:00 AM – 1:00 PM",
+    seatsRemaining: 11,
+    totalSeats: 30,
+    center: "Nexora Quantum AI Lab",
+  },
+];
+
+export const batchConfig = {
+  badge: "Academic Calendar 2026",
+  headlineTop: "Upcoming",
+  headlineGradient: "Super-30 Batches",
+  support:
+    "Batches are capped to preserve 1-on-1 mentorship and daily doubt access — enrollment numbers shown reflect current data.",
+  // Show the urgent styling only when remaining seats drop at or below this figure.
+  urgentThreshold: 5,
+};

@@ -1,248 +1,208 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Trophy, Award, Star, CheckCircle, TrendingUp, 
-  Calculator, Sparkles, ArrowRight, Building2, Quote, CheckCircle2, Info 
-} from 'lucide-react';
-import { resultsData, statsOverview } from '../../data/mockData';
+import React, { useState, useMemo } from "react";
+import { motion } from "framer-motion";
+import { Trophy, Calculator, Info, Building2, CheckCircle2, ShieldCheck, Users } from "lucide-react";
+import { resultsData, statsOverview, predictorExams, rankBrackets, predictorDisclaimer } from "../../data/results";
+import Counter from "../ui/Counter";
+import { SectionHeading, EASE } from "../ui/SectionHeading";
 
 export default function ResultsDashboard() {
-  const [examType, setExamType] = useState('JEE');
-  const [score, setScore] = useState(290);
+  const [examKey, setExamKey] = useState("JEE");
+  const [score, setScore] = useState(predictorExams.JEE.defaultScore);
 
-  // Dynamic rank prediction logic
-  const maxScore = examType === 'JEE' ? 360 : 720;
-  const normalizedScore = Math.min(score, maxScore);
+  const exam = predictorExams[examKey];
+  const normalized = Math.min(score, exam.maxScore);
 
-  let predictedRank = "AIR 1 - 50";
-  let eligibleColleges = "IIT Bombay, IIT Delhi, IIT Madras (Computer Science)";
-  
-  if (examType === 'JEE') {
-    if (normalizedScore > 320) {
-      predictedRank = "AIR 1 - 50";
-      eligibleColleges = "IIT Bombay / IIT Delhi (CS / Electrical)";
-    } else if (normalizedScore > 280) {
-      predictedRank = "AIR 51 - 250";
-      eligibleColleges = "IIT Kharagpur / IIT Kanpur (CS / ECE)";
-    } else if (normalizedScore > 240) {
-      predictedRank = "AIR 251 - 1,200";
-      eligibleColleges = "IIT Roorkee / IIT Guwahati / IIT Hyderabad";
-    } else if (normalizedScore > 180) {
-      predictedRank = "AIR 1,201 - 5,000";
-      eligibleColleges = "Top Tier 1 IITs & NIT Trichy / Surathkal";
-    } else {
-      predictedRank = "AIR 5,000 - 15,000";
-      eligibleColleges = "Established IITs & Top NITs";
-    }
-  } else {
-    if (normalizedScore > 700) {
-      predictedRank = "AIR 1 - 30";
-      eligibleColleges = "AIIMS New Delhi / JIPMER Puducherry";
-    } else if (normalizedScore > 670) {
-      predictedRank = "AIR 31 - 300";
-      eligibleColleges = "Maulana Azad Medical College / VMMC Delhi";
-    } else if (normalizedScore > 640) {
-      predictedRank = "AIR 301 - 1,500";
-      eligibleColleges = "Top State Government Medical Colleges";
-    } else {
-      predictedRank = "AIR 1,501 - 8,000";
-      eligibleColleges = "Government Medical Colleges Nationwide";
-    }
-  }
+  const bracket = useMemo(() => {
+    const list = rankBrackets[examKey];
+    return list.find((b) => normalized >= b.min) || list[list.length - 1];
+  }, [examKey, normalized]);
+
+  const switchExam = (key) => {
+    setExamKey(key);
+    setScore(predictorExams[key].defaultScore);
+  };
 
   return (
-    <section id="results" className="py-24 relative bg-slate-950/95 border-t border-slate-800/80 bg-dots-pattern overflow-hidden">
-      
-      {/* Tamed Ambient Glow */}
-      <div className="absolute top-1/4 left-1/3 w-[600px] h-[400px] bg-amber-500/10 blur-[150px] rounded-full pointer-events-none" />
+    <section id="results" className="section-padding relative bg-[var(--background)] border-y border-[var(--border-subtle)] bg-dots-pattern overflow-hidden">
+      <div className="absolute top-1/4 left-1/3 w-[600px] h-[420px] bg-amber-500/[0.07] blur-[160px] rounded-full pointer-events-none" aria-hidden="true" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono-tech uppercase tracking-widest mb-4 shadow-sm">
-            <Trophy className="w-3.5 h-3.5" />
-            <span>Proven Record of Excellence</span>
-          </div>
-          <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Hall of Fame & <span className="text-gradient-gold">AIR Toppers</span>
-          </h2>
-          <p className="mt-4 text-slate-300 text-base sm:text-lg">
-            Our results speak louder than words. Year after year, Nexora students dominate the top 100 ranks in JEE Advanced and NEET.
-          </p>
-        </div>
+      <div className="container-custom relative z-10">
+        <SectionHeading
+          badge="Proven Record of Excellence"
+          badgeIcon={ShieldCheck}
+          headlineTop="Hall of Fame &"
+          headlineGradient="AIR Toppers"
+          support="Year after year, Nexora students dominate the top ranks in JEE Advanced and NEET UG with a verified culture of precision and mentorship."
+          tone="gold"
+        />
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-16">
+        {/* Large statistics with animated counters */}
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3.5 mb-14">
           {statsOverview.map((st, i) => (
-            <div key={i} className="glass-card-glow p-6 rounded-3xl border border-slate-800 text-center relative overflow-hidden group bg-slate-950/80">
-              <span className="text-xs text-slate-400 font-mono-tech uppercase block mb-1">
-                {st.label}
-              </span>
-              <span className="font-heading text-3xl sm:text-5xl font-extrabold text-gradient-gold inline-block">
-                {st.prefix}{st.value.toLocaleString()}{st.suffix}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Topper Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-          {resultsData.map((topper, idx) => (
             <motion.div
-              key={topper.name}
+              key={`${st.label}-${i}`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="glass-card-glow p-5 rounded-3xl border border-slate-800 hover:border-amber-500/50 transition-all duration-300 flex flex-col justify-between group shadow-xl bg-slate-950/90"
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.45, delay: i * 0.05, ease: EASE }}
+              className="surface-base surface-accent p-5 text-center bg-[var(--surface-raised)]/60"
             >
-              <div>
-                <div className="relative mb-4 rounded-2xl overflow-hidden h-52 bg-slate-900 border border-slate-800">
-                  <img 
-                    src={topper.image} 
-                    alt={topper.name} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
-                  
-                  {/* Metallic Rank Badge - Gold restricted strictly for ranks */}
-                  <div className="absolute top-3 left-3 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 text-slate-950 font-heading font-black text-xs sm:text-sm px-3.5 py-1 rounded-full shadow-lg flex items-center gap-1.5">
-                    <Trophy className="w-3.5 h-3.5 text-slate-950" />
-                    <span>{topper.rank}</span>
-                  </div>
-
-                  <div className="absolute bottom-3 left-3 right-3 text-white">
-                    <span className="text-[10px] font-mono-tech text-amber-300 block uppercase">
-                      {topper.exam}
-                    </span>
-                    <span className="font-heading text-base font-bold">
-                      Score: {topper.score}
-                    </span>
-                  </div>
-                </div>
-
-                <h3 className="font-heading text-lg font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">
-                  {topper.name}
-                </h3>
-                <p className="text-xs text-cyan-400 font-semibold mb-3">
-                  {topper.branch}
-                </p>
-
-                <p className="text-xs text-slate-300 italic leading-relaxed mb-4">
-                  "{topper.quote}"
-                </p>
+              <div className="font-heading text-2xl sm:text-3xl font-extrabold text-gradient-gold">
+                <Counter value={st.value} prefix={st.prefix} suffix={st.suffix} />
               </div>
-
-              <div className="pt-3 border-t border-slate-800/80 text-[11px] font-mono-tech text-slate-400">
-                Enrolled: {topper.courseEnrolled}
-              </div>
+              <p className="mt-1.5 text-[11px] leading-snug font-mono-tech uppercase tracking-wide text-[var(--text-tertiary)]">
+                {st.label}
+              </p>
             </motion.div>
           ))}
         </div>
 
-        {/* Interactive Rank Predictor Tool */}
-        <div className="glass-card-glow p-6 sm:p-10 rounded-3xl border border-amber-500/30 shadow-2xl relative overflow-hidden bg-slate-950">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            <div className="lg:col-span-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono-tech uppercase mb-4">
-                <Calculator className="w-3.5 h-3.5" />
-                <span>Interactive AI Calculator</span>
+        {/* Hall of Fame AIR cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-16">
+          {resultsData.map((topper, idx) => (
+            <motion.article
+              key={topper.name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: idx * 0.07, ease: EASE }}
+              className="surface-base surface-hover p-5 flex flex-col justify-between bg-[var(--surface-raised)]/60 group"
+            >
+              <div>
+                <div className="relative mb-4 rounded-2xl overflow-hidden h-44 bg-[var(--surface)] border border-[var(--border-subtle)]">
+                  <img
+                    src={topper.image}
+                    alt={topper.name}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-600"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent" aria-hidden="true" />
+
+                  {/* Gold rank badge — reserved strictly for ranks */}
+                  <div className="absolute top-3 left-3 bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 text-[#3a2500] font-heading font-black text-xs px-3 py-1 rounded-full shadow-lg flex items-center gap-1.5">
+                    <Trophy className="w-3.5 h-3.5" />
+                    {topper.rank}
+                  </div>
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
+                    <span className="font-mono-tech text-[10px] uppercase text-amber-200 bg-[var(--background)]/70 backdrop-blur px-2 py-0.5 rounded-full border border-amber-500/30">
+                      {topper.exam} · {topper.year}
+                    </span>
+                    <span className="font-heading text-sm font-bold">{topper.score}</span>
+                  </div>
+                </div>
+
+                <h3 className="font-heading text-lg font-bold text-white group-hover:text-amber-300 transition-colors">
+                  {topper.name}
+                </h3>
+                <p className="text-xs text-cyan-300 font-medium mt-0.5">{topper.branch}</p>
+                <p className="mt-3 text-xs italic leading-relaxed text-[var(--text-secondary)] line-clamp-3">
+                  “{topper.quote}”
+                </p>
               </div>
 
-              <h3 className="font-heading text-2xl sm:text-4xl font-extrabold text-white mb-3">
-                Predict Your <span className="text-gradient-gold">All India Rank & College</span>
+              <div className="pt-3 mt-4 border-t border-[var(--border-subtle)] font-mono-tech text-[11px] text-[var(--text-tertiary)]">
+                <span className="flex items-center gap-1.5">
+                  <Users className="w-3.5 h-3.5 text-cyan-300" />
+                  {topper.courseEnrolled}
+                </span>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+
+        {/* AIR Predictor — DEMO estimator */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="surface-base overflow-hidden rounded-[1.75rem] bg-[var(--surface-raised)]/70 backdrop-blur border-amber-500/20"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-6 sm:p-10 items-center">
+            {/* Controls */}
+            <div className="lg:col-span-6">
+              <span className="badge badge-gold mb-4">
+                <Calculator className="w-3.5 h-3.5" />
+                Interactive AIR Estimator
+              </span>
+              <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white mt-3 mb-3 pt-1 leading-tight">
+                Estimate Your <span className="text-gradient-gold">All-India Rank</span>
               </h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
-                Drag the score slider to calculate your estimated AIR range based on Nexora's historical dataset of 10+ years of national exam scores.
+              <p className="text-sm leading-relaxed mb-6 text-[var(--text-secondary)]">
+                Select an exam, set your score and get an immediate probability band with likely colleges and a recommended program.
               </p>
 
-              {/* Exam Switcher */}
-              <div className="flex items-center gap-3 mb-6">
-                <button
-                  onClick={() => {
-                    setExamType('JEE');
-                    setScore(290);
-                  }}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    examType === 'JEE'
-                      ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-950 shadow-md shadow-amber-500/20'
-                      : 'bg-slate-900 text-slate-300 border border-slate-800 hover:border-slate-700'
-                  }`}
-                >
-                  IIT-JEE Advanced (Max 360)
-                </button>
-
-                <button
-                  onClick={() => {
-                    setExamType('NEET');
-                    setScore(680);
-                  }}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    examType === 'NEET'
-                      ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-950 shadow-md shadow-amber-500/20'
-                      : 'bg-slate-900 text-slate-300 border border-slate-800 hover:border-slate-700'
-                  }`}
-                >
-                  NEET UG (Max 720)
-                </button>
+              {/* Exam switcher */}
+              <div className="flex items-center gap-3 mb-7">
+                {Object.entries(predictorExams).map(([key, cfg]) => (
+                  <button
+                    key={key}
+                    onClick={() => switchExam(key)}
+                    aria-pressed={examKey === key}
+                    className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      examKey === key
+                        ? "bg-gradient-to-r from-amber-400 to-amber-500 text-[#3a2500] shadow-md shadow-amber-500/25"
+                        : "bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)] hover:border-amber-500/40"
+                    }`}
+                  >
+                    {cfg.label} <span className="opacity-60">(Max {cfg.maxScore})</span>
+                  </button>
+                ))}
               </div>
 
-              {/* Slider Input */}
+              {/* Score slider */}
               <div className="space-y-3 mb-4">
-                <div className="flex justify-between text-xs font-mono-tech text-slate-300">
-                  <span>TARGET SCORE SLIDER</span>
-                  <span className="font-bold text-amber-400 text-base">{normalizedScore} / {maxScore}</span>
+                <div className="flex justify-between items-baseline font-mono-tech text-xs">
+                  <span className="text-[var(--text-tertiary)] uppercase tracking-widest">Your Score</span>
+                  <span className="font-bold text-amber-300 text-lg">{normalized} / {exam.maxScore}</span>
                 </div>
-                <input 
+                <input
                   type="range"
-                  min={examType === 'JEE' ? 100 : 400}
-                  max={maxScore}
+                  min={exam.minSliderScore}
+                  max={exam.maxScore}
                   value={score}
                   onChange={(e) => setScore(Number(e.target.value))}
-                  className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-400"
+                  aria-label={`${exam.label} score slider`}
+                  className="range-input [accent-color:var(--accent-gold)]"
                 />
               </div>
 
-              {/* Demo Disclaimer */}
-              <div className="flex items-center gap-1.5 text-[11px] font-mono-tech text-slate-400 italic">
-                <Info className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <span>Illustrative estimate — actual rank depends on examination performance and official results.</span>
+              <div className="flex items-start gap-2 text-[11px] font-mono-tech italic text-[var(--text-tertiary)]">
+                <Info className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+                <span>{predictorDisclaimer}</span>
               </div>
             </div>
 
-            {/* Prediction Output Card */}
-            <div className="lg:col-span-6 bg-slate-900/95 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl">
-              <span className="text-xs font-mono-tech text-slate-400 uppercase tracking-widest block mb-2">
-                ESTIMATED RANK PREDICTION
-              </span>
-              <div className="font-heading text-3xl sm:text-5xl font-black text-amber-400 mb-4 drop-shadow-sm">
-                {predictedRank}
-              </div>
-
-              <div className="pt-4 border-t border-slate-800 space-y-3 text-xs sm:text-sm text-slate-300">
-                <div className="flex items-start gap-2">
-                  <Building2 className="w-4 h-4 text-cyan-400 mt-0.5 shrink-0" />
-                  <div>
-                    <span className="font-semibold text-white block">Probable Top Colleges:</span>
-                    <span>{eligibleColleges}</span>
-                  </div>
+            {/* Result */}
+            <div className="lg:col-span-6">
+              <div className="rounded-2xl border border-amber-500/25 bg-[var(--background)]/60 p-6 sm:p-8 shadow-xl">
+                <span className="eyebrow-label block text-[10px] mb-1 !text-amber-300 !tracking-widest">
+                  Estimated Rank Prediction
+                </span>
+                <div className="font-heading text-3xl sm:text-5xl font-black text-gradient-gold mt-2 mb-5">
+                  {bracket.rank}
                 </div>
 
-                <div className="flex items-start gap-2 pt-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-                  <div>
-                    <span className="font-semibold text-white block">Recommended Nexora Program:</span>
-                    <span>{examType === 'JEE' ? 'Zenith Super-30 Batch' : 'Apex Medical Fast-Track'}</span>
+                <div className="pt-4 border-t border-[var(--border)] space-y-4 text-xs sm:text-sm text-[var(--text-secondary)]">
+                  <div className="flex items-start gap-2.5">
+                    <Building2 className="w-4 h-4 text-cyan-300 mt-0.5 shrink-0" />
+                    <div>
+                      <span className="font-semibold text-white block mb-0.5">Probable top colleges</span>
+                      {bracket.colleges}
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
+                    <div>
+                      <span className="font-semibold text-white block mb-0.5">Recommended Nexora program</span>
+                      {exam.program}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
-        </div>
-
+        </motion.div>
       </div>
     </section>
   );

@@ -1,206 +1,263 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Users, Award, Star, BookOpen, Quote, Trophy,
-  ArrowRight, Sparkles, CheckCircle, GraduationCap, Calendar 
-} from 'lucide-react';
-import { facultyData } from '../../data/mockData';
+import React, { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { GraduationCap, Trophy, BookOpen, Sparkles, Star, X, Award } from "lucide-react";
+import { facultyData, facultyDomains } from "../../data/faculty";
+import { SectionHeading, EASE } from "../ui/SectionHeading";
 
 export default function FacultyShowcase({ onOpenConsultation }) {
-  const [selectedFaculty, setSelectedFaculty] = useState(null);
-  const [filterDomain, setFilterDomain] = useState('All');
+  const [selected, setSelected] = useState(null);
+  const [tab, setTab] = useState("profile");
+  const [domain, setDomain] = useState("All");
 
-  const domains = ['All', 'Physics', 'Chemistry', 'Mathematics', 'Biology'];
+  const filtered = useMemo(
+    () =>
+      facultyData.filter(
+        (f) => domain === "All" || f.subject === domain
+      ),
+    [domain]
+  );
 
-  const filteredFaculty = facultyData.filter(f => {
-    if (filterDomain === 'All') return true;
-    return f.role.toLowerCase().includes(filterDomain.toLowerCase()) || 
-           f.specialty.toLowerCase().includes(filterDomain.toLowerCase());
-  });
+  const openModal = (f) => {
+    setSelected(f);
+    setTab("profile");
+  };
 
   return (
-    <section id="faculty" className="py-24 relative bg-slate-950 border-t border-slate-800/80">
-      
-      {/* Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-cyan-600/10 blur-[160px] rounded-full pointer-events-none" />
+    <section id="faculty" className="section-padding relative bg-[var(--background)] border-y border-[var(--border-subtle)]">
+      <div className="absolute top-1/3 right-[-6rem] w-96 h-96 bg-cyan-500/8 blur-[150px] rounded-full pointer-events-none" aria-hidden="true" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono-tech uppercase tracking-widest mb-4">
-            <GraduationCap className="w-3.5 h-3.5" />
-            <span>Senior Master Faculty</span>
-          </div>
-          <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Learn From The <span className="text-gradient-cyan">Minds Behind Top AIRs</span>
-          </h2>
-          <p className="mt-4 text-slate-300 text-base sm:text-lg">
-            Our educators aren't just tutors — they are IITians, AIIMS Doctors, and Ph.D. researchers who have authored top reference books and trained national toppers.
-          </p>
-        </div>
+      <div className="container-custom relative z-10">
+        <SectionHeading
+          badge="Senior Master Faculty"
+          badgeIcon={GraduationCap}
+          headlineTop="Learn From The"
+          headlineGradient="Minds Behind Top AIRs"
+          support="Our educators aren't just tutors — they are IITians, AIIMS doctors and Ph.D. researchers who have authored reference books and mentored national toppers."
+        />
 
-        {/* Domain Filter Pills */}
-        <div className="flex items-center justify-center gap-2 mb-12 flex-wrap">
-          {domains.map((dom) => (
+        {/* Subject filter */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
+          {facultyDomains.map((d) => (
             <button
-              key={dom}
-              onClick={() => setFilterDomain(dom)}
-              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all ${
-                filterDomain === dom
-                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-lg shadow-cyan-500/25'
-                  : 'bg-slate-900 text-slate-300 border border-slate-800 hover:border-slate-700'
+              key={d}
+              onClick={() => setDomain(d)}
+              aria-pressed={domain === d}
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer ${
+                domain === d
+                  ? "text-[#04121f] bg-gradient-to-r from-cyan-400 to-blue-500 shadow-md shadow-cyan-500/25 font-bold"
+                  : "text-[var(--text-secondary)] bg-[var(--surface-raised)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)]"
               }`}
             >
-              {dom}
+              {d}
             </button>
           ))}
         </div>
 
-        {/* Faculty Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredFaculty.map((faculty) => (
-            <motion.div
-              key={faculty.id}
-              id={faculty.id}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="glass-panel rounded-3xl border border-slate-800 overflow-hidden group hover:border-cyan-500/50 transition-all duration-300 flex flex-col justify-between shadow-xl"
-            >
-              <div>
-                {/* Faculty Photo */}
-                <div className="relative h-64 overflow-hidden bg-slate-900">
-                  <img 
-                    src={faculty.avatar} 
-                    alt={faculty.name} 
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <AnimatePresence mode="popLayout">
+            {filtered.map((f, idx) => (
+              <motion.article
+                key={f.id}
+                layout
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.45, delay: idx * 0.05, ease: EASE }}
+                className="surface-base surface-hover overflow-hidden group flex flex-col bg-[var(--surface-raised)]/50"
+              >
+                {/* Photo */}
+                <div className="relative h-60 overflow-hidden bg-[var(--surface)]">
+                  <img
+                    src={f.avatar}
+                    alt={`${f.name} — ${f.role}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover object-top group-hover:scale-[1.05] transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
-                  
-                  {/* Node Type Tag */}
-                  <div className="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-cyan-500/40 text-[10px] font-mono-tech font-bold text-cyan-400">
-                    ORB NODE: {faculty.nodeType}
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent" aria-hidden="true" />
 
-                  {/* Top Rank Badge */}
-                  <div className="absolute bottom-3 left-3 right-3 bg-slate-950/90 backdrop-blur-md p-2.5 rounded-xl border border-slate-800 text-xs text-amber-400 font-semibold flex items-center gap-2">
-                    <Trophy className="w-4 h-4 text-amber-400 shrink-0" />
-                    <span className="line-clamp-1">{faculty.topRanks}</span>
+                  {/* Node tag */}
+                  <span className="absolute top-3 left-3 badge !py-1 !px-2.5 !text-[9px] badge-cyan">
+                    Orb Loop · {f.nodeType}
+                  </span>
+
+                  {/* Achievement badge */}
+                  <div className="absolute bottom-3 inset-x-3 bg-[var(--background)]/80 backdrop-blur-md border border-amber-500/30 rounded-xl p-2.5 text-[11px] text-amber-300 font-semibold flex items-center gap-2">
+                    <Trophy className="w-4 h-4 shrink-0" />
+                    <span className="line-clamp-1">{f.achievement}</span>
                   </div>
                 </div>
 
-                {/* Faculty Info */}
-                <div className="p-5">
-                  <h3 className="font-heading text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">
-                    {faculty.name}
+                {/* Details */}
+                <div className="p-5 grow">
+                  <h3 className="font-heading text-lg font-bold text-white group-hover:text-cyan-300 transition-colors">
+                    {f.name}
                   </h3>
-                  <p className="text-xs text-cyan-400 font-medium mb-2">
-                    {faculty.role}
-                  </p>
-                  <p className="text-xs text-slate-400 font-mono-tech mb-4">
-                    {faculty.qualification}
-                  </p>
+                  <p className="text-xs text-cyan-300 font-medium mt-0.5">{f.role}</p>
+                  <p className="font-mono-tech text-[11px] text-[var(--text-tertiary)] mt-1.5">{f.qualification}</p>
 
-                  <p className="text-xs text-slate-300 leading-relaxed mb-4 line-clamp-2">
-                    "{faculty.quote}"
+                  <div className="flex items-center gap-2 mt-3">
+                    <span className="badge !py-0.5 !px-2 !text-[10px]">
+                      <BookOpen className="w-3 h-3 text-cyan-300" />
+                      {f.subject}
+                    </span>
+                    <span className="badge !py-0.5 !px-2 !text-[10px]">
+                      <Star className="w-3 h-3 text-amber-400" />
+                      {f.stats.rating}
+                    </span>
+                    <span className="badge !py-0.5 !px-2 !text-[10px]">{f.experience}</span>
+                  </div>
+
+                  <p className="mt-3 text-xs italic leading-relaxed text-[var(--text-secondary)] line-clamp-2">
+                    “{f.philosophy}”
                   </p>
                 </div>
-              </div>
 
-              {/* Action Buttons */}
-              <div className="p-5 pt-0">
-                <button
-                  onClick={() => setSelectedFaculty(faculty)}
-                  className="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 transition-all duration-200 flex items-center justify-center gap-1.5"
-                >
-                  <span>Read Profile & Bio</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-cyan-400" />
-                </button>
-              </div>
-            </motion.div>
-          ))}
+                {/* Actions */}
+                <div className="p-5 pt-0 grid grid-cols-2 gap-2">
+                  <button onClick={() => openModal(f)} className="btn btn-ghost btn-sm w-full !text-xs">
+                    Read Profile
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSelected(f);
+                      setTab("achievements");
+                    }}
+                    className="btn btn-ghost btn-sm w-full !text-xs"
+                  >
+                    <Award className="w-3.5 h-3.5 text-amber-400" />
+                    Achievements
+                  </button>
+                </div>
+              </motion.article>
+            ))}
+          </AnimatePresence>
         </div>
-
       </div>
 
-      {/* Modal for Faculty Bio */}
+      {/* Faculty modal */}
       <AnimatePresence>
-        {selectedFaculty && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+        {selected && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--background)]/85 backdrop-blur-md"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${selected.name} profile`}
+          >
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="glass-panel max-w-2xl w-full p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-2xl relative"
+              initial={{ opacity: 0, scale: 0.94, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 12 }}
+              transition={{ duration: 0.32, ease: EASE }}
+              className="glass-panel surface-base max-w-2xl w-full p-6 sm:p-8 rounded-[1.75rem] relative max-h-[88vh] overflow-y-auto"
             >
-              <div className="flex items-start justify-between gap-4 mb-6">
-                <div className="flex items-center gap-4">
-                  <img 
-                    src={selectedFaculty.avatar} 
-                    alt={selectedFaculty.name} 
-                    className="w-16 h-16 rounded-2xl object-cover border-2 border-cyan-500/40"
-                  />
-                  <div>
-                    <h3 className="font-heading text-2xl font-bold text-white">
-                      {selectedFaculty.name}
-                    </h3>
-                    <p className="text-xs text-cyan-400 font-semibold">
-                      {selectedFaculty.role}
-                    </p>
-                    <p className="text-xs text-slate-400 font-mono-tech mt-1">
-                      {selectedFaculty.qualification}
-                    </p>
-                  </div>
-                </div>
+              <button
+                onClick={() => setSelected(null)}
+                aria-label="Close profile"
+                className="absolute top-4 right-4 p-2 rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--text-secondary)] hover:text-white transition-colors cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
 
-                <button 
-                  onClick={() => setSelectedFaculty(null)}
-                  className="p-2 text-slate-400 hover:text-white bg-slate-900 rounded-full border border-slate-800"
+              <div className="flex items-start gap-4 mb-6">
+                <img
+                  src={selected.avatar}
+                  alt={selected.name}
+                  className="w-16 h-16 rounded-2xl object-cover object-top border-2 border-cyan-500/40 shrink-0"
+                />
+                <div>
+                  <h3 className="font-heading text-xl sm:text-2xl font-bold text-white">{selected.name}</h3>
+                  <p className="text-xs text-cyan-300 font-semibold">{selected.role}</p>
+                  <p className="font-mono-tech text-xs text-[var(--text-tertiary)] mt-1">{selected.qualification}</p>
+                </div>
+              </div>
+
+              {/* Tab switch */}
+              <div className="flex gap-2 mb-6 bg-[var(--surface)] p-1 rounded-full w-fit border border-[var(--border-subtle)]">
+                <button
+                  onClick={() => setTab("profile")}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                    tab === "profile" ? "bg-cyan-500/20 text-cyan-200 border border-cyan-500/30" : "text-[var(--text-secondary)]"
+                  }`}
                 >
-                  ✕
+                  Profile & Philosophy
+                </button>
+                <button
+                  onClick={() => setTab("achievements")}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                    tab === "achievements" ? "bg-amber-500/20 text-amber-200 border border-amber-500/30" : "text-[var(--text-secondary)]"
+                  }`}
+                >
+                  Achievements
                 </button>
               </div>
 
-              <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
-                <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800">
-                  <span className="text-xs font-mono-tech text-slate-400 uppercase block mb-1">EDUCATOR PHILOSOPHY</span>
-                  <p className="italic text-slate-200">"{selectedFaculty.quote}"</p>
-                </div>
+              <AnimatePresence mode="wait">
+                {tab === "profile" ? (
+                  <motion.div
+                    key="profile"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25 }}
+                    className="space-y-4"
+                  >
+                    <div className="p-4 rounded-2xl bg-[var(--background)]/60 border border-[var(--border-subtle)]">
+                      <span className="eyebrow-label block text-[10px] mb-1.5">Teaching Philosophy</span>
+                      <p className="italic text-slate-200 text-sm">“{selected.philosophy}”</p>
+                    </div>
+                    <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">{selected.bio}</p>
 
-                <p>{selectedFaculty.bio}</p>
-                
-                <div className="grid grid-cols-3 gap-3 pt-2">
-                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-center">
-                    <span className="text-[10px] font-mono-tech text-slate-400 block uppercase">STUDENTS MENTORED</span>
-                    <span className="font-heading text-lg font-bold text-cyan-400">{selectedFaculty.stats.students}</span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-center">
-                    <span className="text-[10px] font-mono-tech text-slate-400 block uppercase">TOP 100 RANKS</span>
-                    <span className="font-heading text-lg font-bold text-amber-400">{selectedFaculty.stats.top100Ranks}</span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-center">
-                    <span className="text-[10px] font-mono-tech text-slate-400 block uppercase">STUDENT RATING</span>
-                    <span className="font-heading text-lg font-bold text-emerald-400">★ {selectedFaculty.stats.rating}</span>
-                  </div>
-                </div>
-              </div>
+                    <div className="grid grid-cols-3 gap-3 pt-1">
+                      <Stat label="Students Mentored" value={selected.stats.students} tone="text-cyan-300" />
+                      <Stat label="Top 100 Ranks" value={selected.stats.top100Ranks} tone="text-amber-300" />
+                      <Stat label="Student Rating" value={`★ ${selected.stats.rating}`} tone="text-emerald-300" />
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="achievements"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25 }}
+                    className="space-y-3"
+                  >
+                    <p className="text-xs font-semibold text-amber-300 uppercase font-mono-tech tracking-widest mb-4">
+                      Career Highlights
+                    </p>
+                    {[selected.topRanks, ...selected.achievements].map((a, i) => (
+                      <div key={i} className="flex items-center gap-3 p-3.5 rounded-xl bg-[var(--background)]/60 border border-[var(--border-subtle)]">
+                        <Award className="w-4 h-4 text-amber-400 shrink-0" />
+                        <span className="text-xs sm:text-sm text-slate-200">{a}</span>
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               <button
                 onClick={() => {
-                  setSelectedFaculty(null);
+                  setSelected(null);
                   onOpenConsultation();
                 }}
-                className="w-full py-3.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-cyan-400 to-indigo-300 hover:from-cyan-300 hover:to-indigo-200 shadow-xl shadow-cyan-500/20"
+                className="btn btn-primary w-full mt-6"
               >
-                Book 1-on-1 Mentorship Session with {selectedFaculty.name.split(' ')[1]}
+                <Sparkles className="w-4 h-4" />
+                Book 1-on-1 Mentorship Session
               </button>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
-
     </section>
+  );
+}
+
+function Stat({ label, value, tone }) {
+  return (
+    <div className="p-3 rounded-xl bg-[var(--background)]/60 border border-[var(--border-subtle)] text-center">
+      <span className={`font-heading text-lg font-bold block ${tone}`}>{value}</span>
+      <span className="text-[10px] font-mono-tech uppercase text-[var(--text-tertiary)]">{label}</span>
+    </div>
   );
 }
