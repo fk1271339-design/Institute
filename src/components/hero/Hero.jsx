@@ -1,123 +1,96 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { Sparkles, ArrowRight, ChevronRight, Trophy, Users, Zap, MessageSquare } from "lucide-react";
-import { heroConfig, heroStats } from "../../data/site";
-import Counter from "../ui/Counter";
-import Magnetic from "../ui/Magnetic";
-import { EASE } from "../ui/SectionHeading";
+import { ArrowRight, PlayCircle, Sparkles } from 'lucide-react';
+import { heroConfig, demoNotice } from '../../data/site';
+import Reveal from '../ui/Reveal';
 
-const statIcons = {
-  cyan: Trophy,
-  blue: Users,
-  indigo: Zap,
-  violet: MessageSquare,
-};
-
-const statAccent = {
-  cyan: "text-cyan-300",
-  blue: "text-blue-300",
-  indigo: "text-indigo-300",
-  violet: "text-violet-300",
-};
-
-const sequence = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.11, delayChildren: 0.08 },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 22, filter: "blur(4px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.6, ease: EASE },
-  },
-};
-
-export default function Hero({ onOpenConsultation }) {
+function HeroMotif() {
   return (
-    <section id="top" className="relative min-h-[92vh] pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden flex items-center bg-[var(--background)]">
-      {/* Background layers */}
+    <div className="relative w-full max-w-md mx-auto" aria-hidden="true">
+      <div className="absolute -inset-8 rounded-full bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.14),transparent_65%)]" />
+      <div className="absolute inset-0 -z-0 bg-grid-pattern rounded-[2rem]" />
+
+      <div className="relative grid grid-cols-3 gap-3">
+        {[
+          { label: 'Learn', order: '01', tint: 'bg-[#0b2430]' },
+          { label: 'Practice', order: '02', tint: 'bg-[var(--accent-green-deep)]' },
+          { label: 'Review', order: '03', tint: 'bg-[var(--accent-green)]' },
+          { label: 'Improve', order: '04', tint: 'bg-[var(--accent-mint)]' },
+          { label: 'Repeat', order: '05', tint: 'bg-[#0b2430]' },
+          { label: 'Ready', order: '06', tint: 'bg-[var(--accent-green-deep)]' },
+        ].map((c) => (
+          <span
+            key={c.order}
+            className={`aspect-square rounded-2xl ${c.tint} text-white flex flex-col items-center justify-center shadow-lg`}
+          >
+            <span className="text-[10px] font-mono-tech opacity-70">{c.order}</span>
+            <span className="text-sm md:text-base font-bold tracking-tight">{c.label}</span>
+          </span>
+        ))}
+      </div>
+
+      <svg className="absolute -inset-6 w-[calc(100%+3rem)] h-[calc(100%+3rem)] pointer-events-none opacity-70" viewBox="0 0 400 400" fill="none">
+        <circle cx="200" cy="200" r="170" stroke="rgba(16,185,129,0.18)" strokeWidth="1.5" />
+        <circle cx="200" cy="200" r="120" stroke="rgba(16,185,129,0.12)" strokeWidth="1.5" />
+        <path d="M200 30 v340 M30 200 h340" stroke="rgba(16,185,129,0.1)" strokeWidth="1" />
+        <circle cx="200" cy="30" r="4" fill="var(--accent-green)" />
+        <circle cx="370" cy="200" r="4" fill="var(--accent-mint)" />
+      </svg>
+    </div>
+  );
+}
+
+export default function Hero() {
+  const jumpTo = (href) => {
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  return (
+    <section id="top" className="relative overflow-hidden">
       <div className="absolute inset-0 bg-grid-pattern" aria-hidden="true" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[820px] h-[560px] bg-gradient-to-tr from-cyan-500/12 via-blue-600/8 to-indigo-600/12 blur-[150px] rounded-full pointer-events-none animate-pulse-glow" style={{ animationDuration: "9s" }} aria-hidden="true" />
-      {/* Orbital lines */}
-      <div className="orbital-line top-[12%] left-1/2 -translate-x-1/2 w-[760px] max-w-[90vw] h-[760px] animate-spin-slow" style={{ animationDuration: "90s" }} aria-hidden="true" />
-      <div className="orbital-line top-[12%] left-1/2 -translate-x-1/2 w-[540px] max-w-[90vw] h-[540px] animate-spin-slow" style={{ animationDirection: "reverse", animationDuration: "70s", borderColor: "rgba(99,102,241,0.1)" }} aria-hidden="true" />
-      {/* Minimal particles */}
-      <div className="absolute inset-0 bg-dots-pattern opacity-40 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_30%,black,transparent)]" aria-hidden="true" />
+      <div className="absolute -top-32 right-0 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.12),transparent_62%)]" aria-hidden="true" />
 
-      <div className="container-custom relative z-10">
-        <motion.div variants={sequence} initial="hidden" animate="visible" className="text-center max-w-4xl mx-auto flex flex-col items-center">
-          {/* Badge */}
-          <motion.div variants={item} className="mb-7">
-            <button
-              onClick={onOpenConsultation}
-              className="badge badge-cyan !py-2 !pl-2 hover:bg-cyan-500/15 transition-colors group cursor-pointer"
-              aria-label="Admissions open — register for NSAT scholarship test"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" />
-              </span>
-              <span className="!normal-case !tracking-normal !font-normal text-[11px] sm:text-xs text-slate-200">
-                {heroConfig.badge.label}
-                <span className="text-cyan-300 font-semibold"> {heroConfig.badge.highlight}</span>
-              </span>
-              <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-          </motion.div>
+      <div className="container-custom relative pt-12 pb-16 md:pt-20 md:pb-24 lg:grid lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-14">
+        <div>
+          <span className="badge badge-green mb-6">
+            <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
+            {heroConfig.badge.label} · {heroConfig.badge.sub}
+          </span>
 
-          {/* Headline */}
-          <motion.h1 variants={item} className="headline-xl text-white">
-            {heroConfig.headlineTop}
-            <br />
-            <span className="text-gradient-cyan">{heroConfig.headlineGradient}</span>
-          </motion.h1>
+          <Reveal>
+            <h1 className="headline-xl text-[var(--text-primary)] text-balance">
+              {heroConfig.headlineTop}{' '}
+              <span className="text-gradient-green">{heroConfig.headlineGradient}</span>
+            </h1>
+          </Reveal>
 
-          {/* Support */}
-          <motion.p variants={item} className="lead mt-6 max-w-2xl">
-            {heroConfig.support}
-          </motion.p>
+          <Reveal delay={0.08}>
+            <p className="lead mt-6 max-w-xl text-pretty">{heroConfig.support}</p>
+          </Reveal>
 
-          {/* CTAs */}
-          <motion.div variants={item} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full sm:w-auto">
-            <Magnetic className="w-full sm:w-auto">
-              <button onClick={onOpenConsultation} className="btn btn-primary w-full sm:w-auto group">
+          <Reveal delay={0.16}>
+            <div className="mt-8 flex flex-col sm:flex-row gap-3">
+              <button type="button" onClick={() => jumpTo('#programs')} className="btn btn-primary">
                 {heroConfig.primaryCta}
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </button>
-            </Magnetic>
-            <a href="#scholarship" className="btn btn-ghost w-full sm:w-auto">
-              <Sparkles className="w-4 h-4 text-cyan-300" />
-              {heroConfig.secondaryCta}
-            </a>
-          </motion.div>
+              <button type="button" onClick={() => jumpTo('#practice')} className="btn btn-ghost">
+                <PlayCircle className="w-4 h-4" aria-hidden="true" />
+                {heroConfig.secondaryCta}
+              </button>
+            </div>
+          </Reveal>
 
-          {/* Statistics — deliberately secondary */}
-          <motion.div variants={item} className="mt-14 w-full">
-            <dl className="grid grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--border-subtle)]">
-              {heroStats.map((stat) => {
-                const Icon = statIcons[stat.accent] || Trophy;
-                return (
-                  <div key={stat.id} className="bg-[var(--surface-raised)]/90 backdrop-blur p-4 sm:p-5 text-left">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Icon className={`w-4 h-4 ${statAccent[stat.accent]}`} />
-                      <dd className={`font-heading font-extrabold text-xl sm:text-2xl ${statAccent[stat.accent]}`}>
-                        <Counter value={stat.value} suffix={stat.suffix} decimals={stat.value % 1 !== 0 ? 1 : 0} />
-                      </dd>
-                    </div>
-                    <dt className="text-[11px] sm:text-xs text-[var(--text-secondary)] mt-0.5 leading-snug">
-                      {stat.label}
-                    </dt>
-                  </div>
-                );
-              })}
-            </dl>
-          </motion.div>
-        </motion.div>
+          <Reveal delay={0.24}>
+            <p className="mt-6 max-w-xl text-xs leading-relaxed text-[var(--text-tertiary)]">
+              {demoNotice}
+            </p>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.15} className="mt-14 lg:mt-0">
+          <HeroMotif />
+          <p className="sr-only">Illustration of the Learn, Practice, Review, Improve loop.</p>
+        </Reveal>
       </div>
     </section>
   );

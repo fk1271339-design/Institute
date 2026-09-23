@@ -1,36 +1,31 @@
-export const targetExams = ["IIT-JEE", "NEET-UG", "Olympiad"];
-
-export const targetGrades = ["Class 9 / 10", "Class 11", "Class 12 / Dropper"];
+// Scholarship — a non-binding demo illustration of a possible tier model.
 
 export const scholarshipTiers = [
-  { min: 95, value: 100, label: "Full Waiver" },
-  { min: 90, value: 85, label: "Elite Band" },
-  { min: 85, value: 75, label: "Merit Band" },
-  { min: 75, value: 50, label: "Support Band" },
-  { min: 0, value: 30, label: "Foundation Band" },
+  { min: 90, value: 100, label: "Full waiver" },
+  { min: 80, value: 75, label: "Merit band" },
+  { min: 70, value: 50, label: "Support band" },
+  { min: 0, value: 0, label: "Standard" },
 ];
 
 export const scholarshipConfig = {
-  badge: "Merit-Based Financial Aid",
-  headlineTop: "NSAT",
-  headlineGradient: "100% Scholarship Test",
+  badge: "Scholarship",
+  headlineTop: "Merit-based support, ",
+  headlineGradient: "explained simply",
   support:
-    "No deserving talent should be restricted by financial constraints. Take the online NSAT test to claim up to 100% fee waiver.",
-  cta: "Register for NSAT Test Now (Free)",
-  confirmedTitle: "Registration Confirmed!",
-  confirmedBody: "Your NSAT slot & login credentials have been sent to",
-  confirmedMeta: "Exam Date: Next Sunday 10:00 AM IST (Online 1-Hour Test)",
-  sliderMin: 60,
-  sliderMax: 99,
-  gradeDefault: "Class 11",
-  examDefault: "IIT-JEE",
-  percentageDefault: 88,
-  disclaimer:
-    "This on-site estimate is illustrative only — your final scholarship band is decided by the actual NSAT result and published scholarship rules.",
+    "A scholarship test can lead to a fee waiver. The tier model below is an illustrative demo of how bands might look — exact terms, test dates and rules are confirmed by admissions.",
+  cta: "Ask about scholarship tests",
+  title: "Illustrative estimate",
+  sliderMin: 0,
+  sliderMax: 100,
+  percentDefault: 84,
+  tierDisclaimer:
+    "Non-binding illustration only. The figure below is a demo estimate and does not promise any award. Actual eligibility and terms require confirmation from admissions.",
+  confirmedTitle: "Request noted",
+  confirmedBody: "Demo only — no scholarship was applied for and nothing was sent.",
 };
 
-export const nsatSteps = [
-  "Step 1 · Pick your target exam & grade",
-  "Step 2 · Register for the free online NSAT",
-  "Step 3 · Receive your merit band within 48 hours",
+export const scholarshipSteps = [
+  "1 · Take a short scholarship aptitude test",
+  "2 · Receive a band based on the score",
+  "3 · Confirm terms directly with admissions",
 ];

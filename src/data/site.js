@@ -1,118 +1,97 @@
 // ============================================================
 // Central brand config — edit these to replace demo content
-// with real client information.
+// with verified client information.
 // ============================================================
 
 export const brand = {
   name: "Nexora Academy",
   shortName: "NEXORA",
-  tagline: "Academy of Competitive Excellence",
-  logoBadge: "PRO",
+  tagline: "Focused coaching for competitive exams",
   description:
-    "India's premier futuristic EdTech institute for IIT-JEE, NEET-UG and International Olympiads — powered by senior IITian faculty, 3D interactive learning engines and personalized AI rank diagnostics.",
+    "Nexora Academy is a coaching concept for IIT-JEE, NEET-UG, Olympiads and STEM foundation programs, built around a simple loop: Learn, Practice, Review, Improve.",
 };
 
 export const demoNotice =
-  "This is a demo concept. Names, ranks, results and numbers shown are illustrative and replaceable with verified client data before publishing.";
+  "This is a design-concept website for Nexora Academy. All programs, figures, batches, schedules, and quotes shown are illustrative sample content for layout demonstration. Replace with verified business data before publishing this site.";
 
 export const heroConfig = {
   badge: {
-    label: "Admissions Open 2026-27",
-    highlight: "NSAT 100% Scholarship Test",
+    label: "Demo concept website",
+    sub: "Content is illustrative — verified details added before launch",
   },
-  headlineTop: "Pioneering The Next Era Of",
-  headlineGradient: "Competitive Excellence",
+  headlineTop: "Focused preparation for",
+  headlineGradient: "competitive exams",
   support:
-    "Serious preparation for IIT-JEE, NEET-UG and International Olympiads with senior IITian & doctor faculty, 3D interactive learning engines and personalized AI rank diagnostics.",
-  primaryCta: "Explore Courses & Batches",
-  secondaryCta: "Register for NSAT Scholarship",
+    "A structured learning loop — Learn, Practice, Review, Improve — for IIT-JEE, NEET-UG, Olympiads and STEM foundation. Small batches, named mentors, and exam-true practice.",
+  primaryCta: "Explore programs",
+  secondaryCta: "Try a sample test",
 };
 
-export const heroStats = [
+export const proofPoints = [
   {
-    id: "air",
-    value: 340,
-    prefix: "",
-    suffix: "+",
-    label: "Top 100 All-India Ranks in JEE & NEET",
-    accent: "cyan",
+    id: "loop",
+    title: "One repeatable loop",
+    text: "Learn → Practice → Review → Improve is built into every batch and every week, not bolted on after tests.",
   },
   {
-    id: "selections",
-    value: 18500,
-    prefix: "",
-    suffix: "+",
-    label: "Selections in top IITs & AIIMS",
-    accent: "blue",
+    id: "batches",
+    title: "Small, mentored batches",
+    text: "Batch sizes stay small enough that every student keeps a named mentor and a clear weekly focus.",
   },
   {
-    id: "qualification",
-    value: 96.4,
-    prefix: "",
-    suffix: "%",
-    label: "Qualification success rate in target exams",
-    accent: "indigo",
+    id: "practice",
+    title: "Exam-true practice mode",
+    text: "Portal-style mock tests mirror real exam interfaces so the real paper feels familiar.",
   },
   {
-    id: "support",
-    value: 24,
-    prefix: "",
-    suffix: "/7",
-    label: "AI + faculty hybrid doubt support",
-    accent: "violet",
+    id: "honest",
+    title: "Honest, demo-only claims",
+    text: "No invented ranks or success rates here — outcomes and data shown are clearly labelled as illustrative.",
   },
 ];
 
 export const navLinks = [
-  { name: "Orb", href: "#orb-section" },
-  { name: "Courses", href: "#courses" },
-  { name: "Journey", href: "#journey" },
-  { name: "Why Nexora", href: "#why-nexora" },
-  { name: "Faculty", href: "#faculty" },
-  { name: "Results", href: "#results" },
-  { name: "Test Series", href: "#test-series" },
-  { name: "Batches", href: "#batches" },
-  { name: "Scholarship", href: "#scholarship" },
-  { name: "FAQ", href: "#faq" },
+  { id: "programs", name: "Programs", href: "#programs" },
+  { id: "method", name: "Method", href: "#method" },
+  { id: "journey", name: "Journey", href: "#journey" },
+  { id: "practice", name: "Practice", href: "#practice" },
+  { id: "batches", name: "Batches", href: "#batches" },
+  { id: "scholarship", name: "Scholarship", href: "#scholarship" },
+  { id: "faq", name: "FAQ", href: "#faq" },
 ];
 
 export const contact = {
-  phone: "+91 1800 639672",
-  phoneLabel: "1800-NEXORA-EDU",
-  email: "admissions@nexoraacademy.edu.in",
-  address: "Nexora Apex Cyber Tower, Knowledge Corridor, Tech City",
-  helpline: "Our academic directors & counselors are available 24/7.",
+  email: "admissions@nexora.example.com",
+  helpline: "Admissions enquiries — hours shared after verified launch",
 };
 
 export const footerColumns = [
   {
-    title: "Academic Programs",
+    title: "Programs",
     links: [
-      { name: "IIT-JEE Zenith Super-30", href: "#courses" },
-      { name: "NEET-UG Apex Medical", href: "#courses" },
-      { name: "International Olympiads", href: "#courses" },
-      { name: "Junior Foundation (Class 8-10)", href: "#courses" },
-      { name: "AI & Tech Pioneers", href: "#courses" },
+      { name: "IIT-JEE", href: "#programs" },
+      { name: "NEET-UG", href: "#programs" },
+      { name: "Olympiad & Foundation", href: "#programs" },
+      { name: "STEM / AI", href: "#programs" },
     ],
   },
   {
-    title: "Technology & Student Portal",
+    title: "Explore",
     links: [
-      { name: "NTA Computer Exam Simulator", href: "#test-series" },
-      { name: "3D Orb Mastery Engine", href: "#orb-section" },
-      { name: "Predictive AIR Rank Estimator", href: "#results" },
-      { name: "NSAT Scholarship Test", href: "#scholarship" },
-      { name: "24/7 AI Doubt Engine", href: "#test-series" },
+      { name: "Learning method", href: "#method" },
+      { name: "Student journey", href: "#journey" },
+      { name: "Practice preview", href: "#practice" },
+      { name: "Scholarship", href: "#scholarship" },
+      { name: "FAQ", href: "#faq" },
     ],
   },
   {
-    title: "Campus & Contact",
+    title: "Connect",
     links: [
-      { name: contact.phoneLabel, href: "tel:1800639672" },
-      { name: contact.email, href: "mailto:admissions@nexoraacademy.edu.in" },
-      { name: "Campus Experience", href: "#gallery" },
-      { name: "Book Counselling", href: "#contact" },
-      { name: "FAQ & Support", href: "#faq" },
+      { name: "Book a free session", href: "#contact" },
+      { name: "admissions@nexora.example.com", href: "mailto:admissions@nexora.example.com" },
+      { name: "Privacy (placeholder)", href: "#" },
+      { name: "Terms (placeholder)", href: "#" },
     ],
   },
 ];
@@ -122,5 +101,4 @@ export const socials = [
   { name: "Instagram", href: "#" },
   { name: "LinkedIn", href: "#" },
   { name: "X", href: "#" },
-  { name: "Telegram", href: "#" },
 ];
