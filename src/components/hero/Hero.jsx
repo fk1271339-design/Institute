@@ -1,123 +1,96 @@
-import { ArrowRight, PlayCircle, Sparkles, CheckCircle2, Info } from 'lucide-react';
+import { ArrowRight, PlayCircle, Sparkles, CheckCircle2, Info, Film } from 'lucide-react';
 import { heroConfig, demoNotice } from '../../data/site';
 import Reveal from '../ui/Reveal';
 
-function HeroMotif() {
-  return (
-    <div className="relative w-full max-w-md mx-auto" aria-hidden="true">
-      {/* Glow aura */}
-      <div className="absolute -inset-6 rounded-full bg-[radial-gradient(circle_at_center,rgba(22,163,148,0.3),transparent_70%)] blur-2xl" />
-
-      {/* Main card panel */}
-      <div className="relative bg-[#082538]/95 backdrop-blur-md border border-[#16A394]/40 rounded-3xl p-6 shadow-2xl overflow-hidden">
-        {/* Decorative ambient grid lines */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none" />
-
-        <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-5">
-          <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-[#16A394] animate-pulse" />
-            <span className="text-xs font-mono-tech text-teal-200 uppercase tracking-wider font-bold">Nexora Learning Engine</span>
-          </div>
-          <span className="text-xs font-mono-tech text-[#C1D2D7]">JEE / NEET Prep</span>
-        </div>
-
-        {/* Interactive process cards */}
-        <div className="grid grid-cols-2 gap-3">
-          {[
-            { step: '01', title: 'Concept Mastery', desc: 'Syllabus alignment', tag: 'Core', bg: 'bg-[#087F78]/25 border-[#087F78]/50' },
-            { step: '02', title: 'Adaptive Practice', desc: 'Targeted drills', tag: 'Practice', bg: 'bg-[#16A394]/25 border-[#16A394]/50' },
-            { step: '03', title: 'Performance Analytics', desc: 'Weak area diagnostics', tag: 'Insights', bg: 'bg-[#F2B84B]/20 border-[#F2B84B]/50' },
-            { step: '04', title: 'Exam Readiness', desc: 'Full length mocks', tag: 'Simulate', bg: 'bg-teal-500/25 border-teal-400/50' },
-          ].map((c) => (
-            <div
-              key={c.step}
-              className={`p-3.5 rounded-xl border ${c.bg} transition-transform hover:-translate-y-0.5`}
-            >
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="text-[10px] font-mono-tech text-teal-300 font-extrabold">{c.step}</span>
-                <span className="text-[9px] font-mono-tech px-1.5 py-0.5 rounded bg-white/10 text-white font-semibold">{c.tag}</span>
-              </div>
-              <h4 className="text-xs font-extrabold text-white leading-tight">{c.title}</h4>
-              <p className="text-[10px] text-[#C1D2D7] mt-0.5">{c.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom indicator strip */}
-        <div className="mt-5 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-[#C1D2D7]">
-          <span className="flex items-center gap-1.5 text-teal-300 font-semibold">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#16A394]" /> Structured Curriculum
-          </span>
-          <span className="text-[#F2B84B] text-[11px] font-mono-tech font-bold">IIT & AIIMS Aligned</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function Hero() {
+export default function Hero({ currentFrame }) {
   const jumpTo = (href) => {
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
-    <section id="top" className="relative overflow-hidden bg-[#082538] text-[var(--color-on-dark)] pt-12 pb-20 md:pt-16 md:pb-28">
-      {/* Subtle overlay grid & glow */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none" aria-hidden="true" />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[750px] h-[450px] bg-[radial-gradient(circle_at_center,rgba(22,163,148,0.22),transparent_70%)] blur-3xl pointer-events-none" aria-hidden="true" />
-
-      <div className="container-custom relative z-10 lg:grid lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-14">
-        <div>
-          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono-tech font-bold uppercase tracking-wider bg-[#087F78]/40 border border-[#16A394]/60 text-teal-200 mb-6 shadow-sm">
+    <section id="top" className="relative min-h-[90vh] flex flex-col justify-center text-white pt-24 pb-20 overflow-hidden">
+      <div className="container-custom relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
+        {/* Floating Badge */}
+        <Reveal>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono-tech font-bold uppercase tracking-wider bg-white/10 backdrop-blur-md border border-teal-500/30 text-teal-200 mb-8 shadow-lg">
             <Sparkles className="w-3.5 h-3.5 text-[#F2B84B]" aria-hidden="true" />
-            {heroConfig.badge.label} · {heroConfig.badge.sub}
-          </span>
+            <span>{heroConfig.badge.label} · {heroConfig.badge.sub}</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#16A394] ml-1 animate-ping" />
+          </div>
+        </Reveal>
 
-          <Reveal>
-            <h1 className="headline-xl text-white text-balance leading-tight">
-              {heroConfig.headlineTop}{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#16A394] via-teal-200 to-[#F2B84B]">
-                {heroConfig.headlineGradient}
-              </span>
-            </h1>
-          </Reveal>
+        {/* Dynamic Frame Counter Highlight in Hero */}
+        <Reveal delay={0.04}>
+          <div className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#087F78]/30 backdrop-blur-md text-[11px] font-mono-tech text-teal-300">
+            <Film className="w-3.5 h-3.5 text-[#F2B84B]" />
+            <span>INTERACTIVE SCROLLETYLLING · FRAME {String((currentFrame || 0) + 1).padStart(2, '0')} / 39</span>
+          </div>
+        </Reveal>
 
-          <Reveal delay={0.08}>
-            <p className="lead mt-6 max-w-xl text-slate-100 text-pretty font-medium leading-relaxed">{heroConfig.support}</p>
-          </Reveal>
+        {/* Main Headline */}
+        <Reveal delay={0.08}>
+          <h1 className="headline-xl text-white text-balance leading-tight max-w-4xl font-extrabold tracking-tight drop-shadow-lg">
+            {heroConfig.headlineTop}{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#16A394] via-teal-200 to-[#F2B84B]">
+              {heroConfig.headlineGradient}
+            </span>
+          </h1>
+        </Reveal>
 
-          <Reveal delay={0.16}>
-            <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <button type="button" onClick={() => jumpTo('#programs')} className="btn btn-primary bg-gradient-to-r from-[#087F78] to-[#16A394] text-white hover:shadow-teal-500/25">
-                {heroConfig.primaryCta}
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </button>
-              <button type="button" onClick={() => jumpTo('#practice')} className="btn text-white bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-sm">
-                <PlayCircle className="w-4 h-4 text-[#F2B84B]" aria-hidden="true" />
-                {heroConfig.secondaryCta}
-              </button>
-            </div>
-          </Reveal>
+        {/* Subtitle / Support Text */}
+        <Reveal delay={0.16}>
+          <p className="lead mt-6 max-w-2xl text-slate-200 text-pretty font-medium leading-relaxed drop-shadow">
+            {heroConfig.support}
+          </p>
+        </Reveal>
 
-          <Reveal delay={0.24}>
-            <div className="mt-7 inline-flex items-start gap-2.5 p-3.5 rounded-xl border border-teal-500/25 bg-[#10384A]/60 backdrop-blur-sm max-w-xl">
-              <Info className="w-4 h-4 text-[#F2B84B] shrink-0 mt-0.5" aria-hidden="true" />
-              <p className="text-xs leading-relaxed text-[#C1D2D7]">
-                {demoNotice}
-              </p>
-            </div>
-          </Reveal>
-        </div>
+        {/* Action Buttons */}
+        <Reveal delay={0.24}>
+          <div className="mt-9 flex flex-wrap justify-center gap-4">
+            <button
+              type="button"
+              onClick={() => jumpTo('#programs')}
+              className="btn btn-primary bg-gradient-to-r from-[#087F78] to-[#16A394] text-white hover:shadow-teal-500/30 px-8 py-3.5 text-base cursor-pointer"
+            >
+              {heroConfig.primaryCta}
+              <ArrowRight className="w-5 h-5" aria-hidden="true" />
+            </button>
 
-        <Reveal delay={0.15} className="mt-12 lg:mt-0">
-          <HeroMotif />
-          <p className="sr-only">Illustration of the Nexora learning engine approach.</p>
+            <button
+              type="button"
+              onClick={() => jumpTo('#practice')}
+              className="btn text-white bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md px-7 py-3.5 text-base cursor-pointer"
+            >
+              <PlayCircle className="w-5 h-5 text-[#F2B84B]" aria-hidden="true" />
+              {heroConfig.secondaryCta}
+            </button>
+          </div>
+        </Reveal>
+
+        {/* Key Highlights Row */}
+        <Reveal delay={0.30}>
+          <div className="mt-12 flex flex-wrap justify-center gap-6 text-xs text-slate-200 font-medium">
+            <span className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#16A394]" /> Structured JEE & NEET Prep
+            </span>
+            <span className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#F2B84B]" /> IIT & AIIMS Faculty Led
+            </span>
+            <span className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#16A394]" /> 39-Frame Interactive Motion Story
+            </span>
+          </div>
+        </Reveal>
+
+        {/* Notice Bar */}
+        <Reveal delay={0.34}>
+          <div className="mt-8 inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-teal-500/20 bg-black/40 backdrop-blur-md max-w-xl text-xs text-slate-300">
+            <Info className="w-4 h-4 text-[#F2B84B] shrink-0" aria-hidden="true" />
+            <p className="leading-relaxed">{demoNotice}</p>
+          </div>
         </Reveal>
       </div>
-
-      {/* Smooth bottom connector transition curve into ProofPoints (pale mint surface) */}
-      <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-b from-transparent to-[#E8F4F1]/30 pointer-events-none" aria-hidden="true" />
     </section>
   );
 }

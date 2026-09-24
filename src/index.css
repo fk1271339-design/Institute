@@ -9,20 +9,20 @@
 
 :root {
   /* Official Nexora Theme Tokens */
-  --color-ink: #102B3A;
-  --color-navy: #082538;
-  --color-navy-soft: #10384A;
+  --color-ink: #FFFFFF;
+  --color-navy: #04101A;
+  --color-navy-soft: #092032;
   --color-teal: #087F78;
   --color-teal-bright: #16A394;
-  --color-mint: #E8F4F1;
-  --color-mint-strong: #D7EBE6;
-  --color-paper: #F5F8F7;
-  --color-surface: #FFFFFF;
-  --color-border: #D7E3E0;
-  --color-text: #183344;
-  --color-muted: #5C7180;
-  --color-on-dark: #F5FAF9;
-  --color-muted-on-dark: #C1D2D7;
+  --color-mint: rgba(22, 163, 148, 0.12);
+  --color-mint-strong: rgba(22, 163, 148, 0.25);
+  --color-paper: transparent;
+  --color-surface: rgba(9, 32, 50, 0.45);
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-text: #E2E8F0;
+  --color-muted: #94A3B8;
+  --color-on-dark: #F8FAFC;
+  --color-muted-on-dark: #CBD5E1;
   --color-highlight: #F2B84B;
 
   /* Typography */
@@ -30,26 +30,26 @@
   --font-mono: 'Space Grotesk', ui-monospace, 'SF Mono', monospace;
 
   /* Mapped aliases */
-  --background: var(--color-paper);
-  --surface: var(--color-surface);
-  --surface-hover: var(--color-mint);
-  --surface-raised: var(--color-surface);
-  --surface-muted: var(--color-mint);
+  --background: transparent;
+  --surface: rgba(4, 16, 26, 0.4);
+  --surface-hover: rgba(22, 163, 148, 0.2);
+  --surface-raised: rgba(4, 16, 26, 0.5);
+  --surface-muted: rgba(22, 163, 148, 0.15);
   --surface-navy: var(--color-navy);
 
-  --text-primary: var(--color-ink);
-  --text-secondary: var(--color-text);
-  --text-tertiary: var(--color-muted);
+  --text-primary: #FFFFFF;
+  --text-secondary: #E2E8F0;
+  --text-tertiary: #94A3B8;
 
   --accent-green: var(--color-teal-bright);
   --accent-green-deep: var(--color-teal);
   --accent-mint: var(--color-mint-strong);
   --accent-gold: var(--color-highlight);
 
-  --border: var(--color-border);
-  --border-subtle: rgba(8, 37, 56, 0.08);
-  --border-strong: rgba(8, 37, 56, 0.18);
-  --border-accent: rgba(8, 127, 120, 0.45);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --border-accent: rgba(22, 163, 148, 0.5);
 
   --success: var(--color-teal);
   --warning: #d97706;
@@ -62,7 +62,7 @@
   --radius-xl: 1.75rem;
   --radius-full: 9999px;
 
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 /* ---------- Base ---------- */
