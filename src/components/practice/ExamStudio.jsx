@@ -41,7 +41,7 @@ export default function ExamStudio() {
   const result = submitted ? selected === sampleTest.answerId : null;
 
   return (
-    <section id="practice" className="section-padding bg-[var(--surface)] border-y border-[var(--border-subtle)]">
+    <section id="practice" className="section-padding bg-[var(--color-paper)] border-b border-[var(--color-border)]">
       <div className="container-custom">
         <SectionHeading
           badge={practiceConfig.badge}
@@ -52,18 +52,18 @@ export default function ExamStudio() {
 
         <div className="grid lg:grid-cols-[1fr_300px] gap-6 max-w-5xl mx-auto">
           <Reveal className="lg:col-span-2">
-            <div className="surface-base overflow-hidden">
+            <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl overflow-hidden shadow-sm">
               {/* Window chrome */}
-              <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--border-subtle)] bg-[var(--surface-muted)]">
+              <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--color-border)] bg-[var(--color-navy)] text-white">
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-[#f1b04b]" aria-hidden="true" />
                   <span className="w-3 h-3 rounded-full bg-[#e06c6c]" aria-hidden="true" />
-                  <span className="w-3 h-3 rounded-full bg-[#53a57b]" aria-hidden="true" />
-                  <span className="ml-3 text-xs font-mono-tech text-[var(--text-tertiary)]">
+                  <span className="w-3 h-3 rounded-full bg-[#16A394]" aria-hidden="true" />
+                  <span className="ml-3 text-xs font-mono-tech text-[#C1D2D7]">
                     Sample interface · not a real test
                   </span>
                 </div>
-                <span className="flex items-center gap-1.5 text-sm font-extrabold font-mono-tech text-[var(--accent-green-deep)]">
+                <span className="flex items-center gap-1.5 text-sm font-extrabold font-mono-tech text-teal-300">
                   <Timer className="w-4 h-4" aria-hidden="true" />
                   {formatTime(timeLeft)}
                 </span>
@@ -72,10 +72,10 @@ export default function ExamStudio() {
               <div className="grid md:grid-cols-[1fr_220px]">
                 {/* Question area */}
                 <div className="p-6 sm:p-8">
-                  <p className="text-xs font-mono-tech uppercase tracking-widest text-[var(--text-tertiary)] mb-3">
+                  <p className="text-xs font-mono-tech uppercase tracking-widest text-[var(--color-muted)] mb-3 font-bold">
                     {sampleTest.subject} · {sampleTest.section}
                   </p>
-                  <h3 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-6 leading-snug">
+                  <h3 className="font-heading text-lg font-extrabold text-[var(--color-ink)] mb-6 leading-snug">
                     {sampleTest.question}
                   </h3>
 
@@ -92,14 +92,14 @@ export default function ExamStudio() {
                           aria-checked={isSelected}
                           disabled={submitted}
                           onClick={() => setSelected(opt.id)}
-                          className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm font-medium transition-colors cursor-pointer disabled:cursor-default ${
+                          className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm font-semibold transition-all cursor-pointer disabled:cursor-default ${
                             isAnswer
-                              ? 'border-[var(--border-accent)] bg-[rgba(16,185,129,0.1)] text-[var(--text-primary)]'
+                              ? 'border-[var(--color-teal)] bg-[var(--color-mint)] text-[var(--color-ink)]'
                               : isWrongPick
-                                ? 'border-[#dc2626]/50 bg-[rgba(220,38,38,0.06)] text-[var(--text-primary)]'
+                                ? 'border-[#dc2626]/50 bg-[rgba(220,38,38,0.06)] text-[var(--color-ink)]'
                                 : isSelected
-                                  ? 'border-[var(--border-accent)] bg-[rgba(16,185,129,0.08)] text-[var(--text-primary)]'
-                                  : 'border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]'
+                                  ? 'border-[var(--color-teal)] bg-[var(--color-mint-strong)] text-[var(--color-ink)]'
+                                  : 'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] hover:border-[var(--color-teal)] hover:bg-[var(--color-mint)]'
                           }`}
                         >
                           <span className="shrink-0 w-7 h-7 rounded-lg border border-current flex items-center justify-center text-xs font-extrabold">
@@ -116,7 +116,7 @@ export default function ExamStudio() {
                       <Send className="w-4 h-4" aria-hidden="true" />
                       {practiceConfig.submitDemoLabel}
                     </button>
-                    <p className="text-xs text-[var(--text-tertiary)]">{practiceConfig.sampleNote}</p>
+                    <p className="text-xs text-[var(--color-muted)]">{practiceConfig.sampleNote}</p>
                   </div>
 
                   {submitted && (
@@ -124,20 +124,20 @@ export default function ExamStudio() {
                       <div
                         className={`rounded-xl border p-4 flex gap-3 items-start ${
                           result
-                            ? 'border-[var(--border-accent)] bg-[rgba(16,185,129,0.08)]'
+                            ? 'border-[var(--color-teal)] bg-[var(--color-mint)]'
                             : 'border-[#dc2626]/40 bg-[rgba(220,38,38,0.05)]'
                         }`}
                       >
                         {result ? (
-                          <CheckCircle2 className="w-5 h-5 shrink-0 text-[var(--accent-green-deep)]" aria-hidden="true" />
+                          <CheckCircle2 className="w-5 h-5 shrink-0 text-[var(--color-teal)]" aria-hidden="true" />
                         ) : (
                           <XCircle className="w-5 h-5 shrink-0 text-[#dc2626]" aria-hidden="true" />
                         )}
                         <div>
-                          <p className="font-heading font-bold text-[var(--text-primary)]">
+                          <p className="font-heading font-extrabold text-[var(--color-ink)]">
                             {result ? 'Correct — well spotted.' : selected ? 'Try again — not this time.' : 'No answer was selected.'}
                           </p>
-                          <p className="text-sm text-[var(--text-secondary)] mt-1 leading-relaxed">{sampleTest.explanation}</p>
+                          <p className="text-sm text-[var(--color-text)] mt-1 leading-relaxed">{sampleTest.explanation}</p>
                         </div>
                       </div>
                     </div>
@@ -145,23 +145,23 @@ export default function ExamStudio() {
                 </div>
 
                 {/* Palette */}
-                <aside className="border-t md:border-t-0 md:border-l border-[var(--border-subtle)] p-6" aria-label="Question navigation sample">
-                  <p className="text-xs font-mono-tech uppercase tracking-widest text-[var(--text-tertiary)] mb-3">Palette</p>
+                <aside className="border-t md:border-t-0 md:border-l border-[var(--color-border)] p-6 bg-[var(--color-paper)]/50" aria-label="Question navigation sample">
+                  <p className="text-xs font-mono-tech uppercase tracking-widest text-[var(--color-muted)] mb-3 font-bold">Palette</p>
                   <div className="grid grid-cols-5 md:grid-cols-4 gap-2">
                     {palette.map((q) => (
                       <span
                         key={q.n}
-                        className={`h-9 rounded-lg border flex items-center justify-center text-xs font-bold ${
+                        className={`h-9 rounded-lg border flex items-center justify-center text-xs font-extrabold ${
                           q.answered
-                            ? 'bg-[rgba(16,185,129,0.12)] border-[var(--border-accent)] text-[var(--accent-green-deep)]'
-                            : 'bg-[var(--surface-muted)] border-[var(--border)] text-[var(--text-tertiary)]'
+                            ? 'bg-[var(--color-mint-strong)] border-[var(--color-teal)] text-[var(--color-teal)]'
+                            : 'bg-[var(--color-surface)] border-[var(--color-border)] text-[var(--color-muted)]'
                         }`}
                       >
                         {q.n}
                       </span>
                     ))}
                   </div>
-                  <p className="mt-4 text-xs text-[var(--text-tertiary)]">
+                  <p className="mt-4 text-xs text-[var(--color-muted)] leading-relaxed">
                     Question navigation is shown as a static sample for layout demonstration.
                   </p>
                 </aside>
@@ -170,12 +170,12 @@ export default function ExamStudio() {
           </Reveal>
         </div>
 
-        <div className="max-w-5xl mx-auto mt-10 grid sm:grid-cols-3 gap-4">
+        <div className="max-w-5xl mx-auto mt-10 grid sm:grid-cols-3 gap-5">
           {practiceOutcomes.map((o, i) => (
             <Reveal key={o.title} delay={i * 0.06}>
-              <div className="surface-base h-full p-6">
-                <h3 className="font-heading text-base font-bold text-[var(--text-primary)] mb-1.5">{o.title}</h3>
-                <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{o.text}</p>
+              <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl h-full p-6 shadow-sm">
+                <h3 className="font-heading text-base font-extrabold text-[var(--color-ink)] mb-2">{o.title}</h3>
+                <p className="text-sm leading-relaxed text-[var(--color-text)]">{o.text}</p>
               </div>
             </Reveal>
           ))}
