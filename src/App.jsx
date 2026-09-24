@@ -46,7 +46,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--text-primary)] flex flex-col font-sans selection:bg-[rgba(16,185,129,0.25)]">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--text-primary)] flex flex-col font-sans selection:bg-[rgba(24,169,153,0.25)]">
       <a href="#main" className="skip-link">
         Skip to main content
       </a>

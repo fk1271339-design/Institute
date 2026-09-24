@@ -4,14 +4,14 @@ import { brand, navLinks } from '../../data/site';
 
 function LogoMark() {
   return (
-    <svg width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true" className="drop-shadow-[0_2px_8px_rgba(16,185,129,0.35)]">
-      <rect width="40" height="40" rx="11" fill="#0b2430" />
+    <svg width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true" className="drop-shadow-[0_2px_8px_rgba(24,169,153,0.35)]">
+      <rect width="40" height="40" rx="11" fill="#071B2B" />
       <rect x="1.5" y="1.5" width="37" height="37" rx="9.5" stroke="url(#nxg)" strokeWidth="3" />
-      <path d="M12 27.5 V12.5 h6.4 c3.6 0 5.8 1.9 5.8 5.1 0 2.2-1.2 3.9-3.2 4.7 l4.2 5.2 h-4.6 l-3.6-4.6 h-1.4 v4.6 Z m2.6-6.6 h3.5 c1.6 0 2.5-0.8 2.5-2.1 0-1.3-0.9-2.1-2.5-2.1 h-3.5 Z" fill="#35e0a5" />
+      <path d="M13 27.5 V12.5 h3.2 l8.8 11.2 V12.5 h3.2 v15 h-3.2 l-8.8-11.2 v11.2 Z" fill="#18A999" />
       <defs>
         <linearGradient id="nxg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#10b981" />
-          <stop offset="1" stopColor="#34d399" />
+          <stop stopColor="#087F78" />
+          <stop offset="1" stopColor="#18A999" />
         </linearGradient>
       </defs>
     </svg>
@@ -49,29 +49,37 @@ export default function Navbar({ onOpenConsultation, onOpenSearch }) {
       <div
         className={`transition-all duration-300 ${
           scrolled
-            ? 'bg-[var(--surface)]/90 backdrop-blur-xl border-b border-[var(--border)] shadow-[0_8px_30px_-18px_rgba(11,36,48,0.3)]'
-            : 'bg-[var(--background)]/80 backdrop-blur-md border-b border-transparent'
+            ? 'bg-[var(--color-surface)]/95 backdrop-blur-xl border-b border-[var(--color-border)] shadow-md shadow-[#082538]/5 text-[var(--color-ink)]'
+            : 'bg-[#082538]/95 backdrop-blur-md border-b border-[#10384A] text-white'
         }`}
       >
-        <nav aria-label="Primary" className="container-custom flex items-center justify-between gap-4 py-3.5">
-          <a href="#main" className="flex items-center gap-2.5 shrink-0" onClick={closeMenu}>
+        <nav aria-label="Primary navigation" className="container-custom flex items-center justify-between gap-4 py-3">
+          <a href="#main" className="flex items-center gap-2.5 shrink-0 group" onClick={closeMenu}>
             <LogoMark />
             <span className="flex flex-col leading-none">
-              <span className="font-heading text-lg font-extrabold tracking-tight text-[var(--text-primary)]">
+              <span className={`font-heading text-lg font-extrabold tracking-tight transition-colors ${
+                scrolled ? 'text-[var(--color-ink)]' : 'text-white'
+              }`}>
                 {brand.shortName}
               </span>
-              <span className="text-[10px] font-mono-tech uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                Academy · demo
+              <span className={`text-[10px] font-mono-tech uppercase tracking-[0.18em] ${
+                scrolled ? 'text-[var(--color-muted)]' : 'text-[var(--color-muted-on-dark)]'
+              }`}>
+                Academy · EdTech
               </span>
             </span>
           </a>
 
-          <ul className="hidden lg:flex items-center gap-1">
+          <ul className="hidden lg:flex items-center gap-1.5 xl:gap-2.5">
             {navLinks.map((link) => (
               <li key={link.id}>
                 <a
                   href={link.href}
-                  className="px-3 py-2 rounded-full text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--accent-green-deep)] hover:bg-[var(--surface-hover)] transition-colors"
+                  className={`px-3 py-1.5 rounded-full text-xs xl:text-sm font-semibold whitespace-nowrap transition-all ${
+                    scrolled
+                      ? 'text-[var(--color-text)] hover:text-[var(--color-teal)] hover:bg-[var(--color-mint)]'
+                      : 'text-slate-200 hover:text-white hover:bg-white/10'
+                  }`}
                 >
                   {link.name}
                 </a>
@@ -79,11 +87,15 @@ export default function Navbar({ onOpenConsultation, onOpenSearch }) {
             ))}
           </ul>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <button
               type="button"
               onClick={onOpenSearch}
-              className="p-2.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)] hover:text-[var(--accent-green-deep)] hover:border-[var(--border-accent)] transition-colors cursor-pointer"
+              className={`p-2.5 rounded-full border transition-all cursor-pointer ${
+                scrolled
+                  ? 'border-[var(--color-border)] bg-[var(--color-paper)] text-[var(--color-text)] hover:text-[var(--color-teal)] hover:border-[var(--color-teal)]'
+                  : 'border-white/20 bg-white/10 text-white hover:bg-white/20 hover:border-white/40'
+              }`}
               aria-label="Search FAQs and programs (Ctrl K)"
             >
               <Search className="w-[18px] h-[18px]" />
@@ -98,7 +110,11 @@ export default function Navbar({ onOpenConsultation, onOpenSearch }) {
             </button>
             <button
               type="button"
-              className="lg:hidden p-2.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] cursor-pointer"
+              className={`lg:hidden p-2.5 rounded-full border transition-all cursor-pointer ${
+                scrolled
+                  ? 'border-[var(--color-border)] bg-[var(--color-paper)] text-[var(--color-ink)]'
+                  : 'border-white/20 bg-white/10 text-white'
+              }`}
               onClick={() => setMenuOpen((v) => !v)}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
@@ -111,31 +127,31 @@ export default function Navbar({ onOpenConsultation, onOpenSearch }) {
       </div>
 
       {menuOpen && (
-        <div id="mobile-menu" className="lg:hidden fixed inset-x-0 top-[65px] bottom-0 z-40 bg-[var(--background)]/95 backdrop-blur-xl">
-          <div className="container-custom py-6 h-full flex flex-col">
-            <ul className="flex flex-col gap-1 overflow-y-auto">
+        <div id="mobile-menu" className="lg:hidden fixed inset-x-0 top-[60px] bottom-0 z-40 bg-[#082538]/98 backdrop-blur-2xl text-white border-t border-[#10384A]">
+          <div className="container-custom py-6 h-full flex flex-col justify-between overflow-y-auto">
+            <ul className="flex flex-col gap-1.5">
               {navLinks.map((link) => (
                 <li key={link.id}>
                   <a
                     href={link.href}
                     onClick={closeMenu}
-                    className="flex items-center justify-between py-3 px-3 rounded-xl text-base font-bold text-[var(--text-primary)] hover:text-[var(--accent-green-deep)] hover:bg-[var(--surface-hover)] transition-colors"
+                    className="flex items-center justify-between py-3.5 px-4 rounded-xl text-base font-bold text-white hover:text-teal-300 hover:bg-white/10 transition-colors"
                   >
                     {link.name}
                   </a>
                 </li>
               ))}
             </ul>
-            <div className="mt-auto pt-6 pb-4">
+            <div className="pt-6 pb-4 border-t border-white/10">
               <button
                 type="button"
                 onClick={() => {
                   closeMenu();
                   onOpenConsultation();
                 }}
-                className="btn btn-primary w-full"
+                className="btn btn-primary w-full py-3.5 text-base"
               >
-                <CalendarCheck className="w-4 h-4" aria-hidden="true" />
+                <CalendarCheck className="w-5 h-5" aria-hidden="true" />
                 Book a free session
               </button>
             </div>
